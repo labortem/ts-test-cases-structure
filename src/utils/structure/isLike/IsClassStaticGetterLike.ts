@@ -1,5 +1,5 @@
-import { HasClassStaticGetterReturn } from "structure/has";
-import { Getter } from "signatures";
+import { HasClassStaticGetterReturn } from "../has";
+import { Getter } from "../../signatures";
 
 /**
  * Check if the given class static getter matches the expected structure.

@@ -1,5 +1,5 @@
-import { HasClassStaticMethodParameters, HasClassStaticMethodReturn } from "structure/has";
-import { Method } from "signatures";
+import { HasClassStaticMethodParameters, HasClassStaticMethodReturn } from "../has";
+import { Method } from "../../signatures";
 
 /**
  * Check if the given class static method matches the expected structure.

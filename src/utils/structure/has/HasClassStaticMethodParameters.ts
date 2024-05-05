@@ -1,4 +1,4 @@
-import { Method } from "signatures";
+import { Method } from "../../signatures";
 
 /**
  * Check if the given class static method does have parameters.

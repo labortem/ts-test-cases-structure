@@ -1,4 +1,4 @@
-import { Getter } from "signatures";
+import { Getter } from "../../signatures";
 
 /**
  * Check if the given class static getter does return a value.

@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "signatures";
-import { ExpectedThrowKey } from "utils/ExpectedThrowKey";
+import { TestCaseExtras } from "../signatures";
+import { ExpectedThrowKey } from ".";
 
 /**
  * Remove the expected throw key from the given {@link TestCaseExtras | `TestCaseExtras`} object.

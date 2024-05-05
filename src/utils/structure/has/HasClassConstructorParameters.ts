@@ -1,4 +1,4 @@
-import { Class } from "signatures";
+import { Class } from "../../signatures";
 
 /**
  * Check if the given class does have constructor parameters.

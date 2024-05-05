@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "signatures";
-import { ExpectedThrowKey } from "utils";
+import { TestCaseExtras } from "../signatures";
+import { ExpectedThrowKey } from ".";
 
 /**
  * Check if the {@link TestCaseExtras | `TestCaseExtras`} object contains a key which means the test case is expected to throw an error.
