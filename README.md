@@ -14,7 +14,8 @@ Repository used as submodules in dependencies to provide typing for test cases s
     folders.
 -   You may need to add a TS import path alias to your `tsconfig.json` to improve readability of the imports. In your
     `tsconfig.json`, add a new path alias into the `compilerOptions.paths` array, eg.:
-    `"@testCasesStructure" : ["path/to/submodule/src/features"]`.
+    `"@testCasesStructure" : ["path/to/submodule/src/features"]`. This will be only import you need as all you need is
+    packaged in a `index.ts` (`import { instanceOf, TestCasesOfStaticClassMethod } from "@testCasesStructure"`)
 -   To update the submodule, `cd` into it, then pull the updates with `git pull`. We recommend to only pull `master`
     branch.
 
