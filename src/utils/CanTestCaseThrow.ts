@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "@tests/types/signatures";
-import { ExpectedThrowKey } from "@tests/types/utils";
+import { TestCaseExtras } from "signatures";
+import { ExpectedThrowKey } from "utils";
 
 /**
  * Check if the {@link TestCaseExtras | `TestCaseExtras`} object contains a key which means the test case is expected to throw an error.
@@ -15,4 +15,5 @@ import { ExpectedThrowKey } from "@tests/types/utils";
  * CanTestCaseThrow<{ expectedThrow: Error, timeout: number }> // true
  * ```
  */
-export type CanTestCaseThrow<C extends TestCaseExtras | void> = ExpectedThrowKey extends keyof C ? true : false;
+export type CanTestCaseThrow<C extends TestCaseExtras | void> =
+  ExpectedThrowKey extends keyof C ? true : false;

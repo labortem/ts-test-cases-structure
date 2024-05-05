@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "@tests/types/signatures";
-import { ExpectedThrowKey } from "@tests/types/utils/ExpectedThrowKey";
+import { TestCaseExtras } from "signatures";
+import { ExpectedThrowKey } from "utils/ExpectedThrowKey";
 
 /**
  * Remove the expected throw key from the given {@link TestCaseExtras | `TestCaseExtras`} object.
@@ -14,4 +14,6 @@ import { ExpectedThrowKey } from "@tests/types/utils/ExpectedThrowKey";
  * RemoveExpectedThrowFromTestCaseExtras<{ expectedThrow: Error, timeout: number }> // { timeout: number }
  * ```
  */
-export type RemoveExpectedThrowFromTestCaseExtras<E extends TestCaseExtras | void> = Omit<E, ExpectedThrowKey>;
+export type RemoveExpectedThrowFromTestCaseExtras<
+  E extends TestCaseExtras | void
+> = Omit<E, ExpectedThrowKey>;

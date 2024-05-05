@@ -1,4 +1,4 @@
-import { TestCaseExtras } from "@tests/types/signatures";
+import { TestCaseExtras } from "signatures";
 
 /**
  * Key for the expected throw value in the test case.

@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "@tests/types/signatures";
-import { RemoveExpectedThrowFromTestCaseExtras } from "@tests/types/utils";
+import { TestCaseExtras } from "signatures";
+import { RemoveExpectedThrowFromTestCaseExtras } from "utils";
 
 /**
  * Check if the {@link TestCaseExtras | `TestCaseExtras`} object is empty without the expected throw key.
@@ -14,5 +14,6 @@ import { RemoveExpectedThrowFromTestCaseExtras } from "@tests/types/utils";
  * IsTestCaseExtrasEmptyWithoutExpectedThrow<{ expectedThrow: Error, timeout: number }> // false
  * ```
  */
-export type IsTestCaseExtrasEmptyWithoutExpectedThrow<E extends TestCaseExtras | void> =
-	keyof RemoveExpectedThrowFromTestCaseExtras<E> extends never ? true : false;
+export type IsTestCaseExtrasEmptyWithoutExpectedThrow<
+  E extends TestCaseExtras | void
+> = keyof RemoveExpectedThrowFromTestCaseExtras<E> extends never ? true : false;

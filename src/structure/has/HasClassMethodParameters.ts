@@ -1,4 +1,4 @@
-import { Method } from "@tests/types/signatures";
+import { Method } from "signatures";
 
 /**
  * Check if the given class method does have parameters.
@@ -6,4 +6,5 @@ import { Method } from "@tests/types/signatures";
  * @typeParam M - Method to check.
  * @remarks The returned type is `true` if the method does have parameters, `false` otherwise.
  */
-export type HasClassMethodParameters<M extends Method> = Parameters<M> extends [] ? false : true;
+export type HasClassMethodParameters<M extends Method> =
+  Parameters<M> extends [] ? false : true;
