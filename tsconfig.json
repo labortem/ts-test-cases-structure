@@ -15,11 +15,7 @@
 		"strictBindCallApply": true,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
-		"strictPropertyInitialization": true,
-
-		"types": [
-			"@jest/globals"
-		]
+		"strictPropertyInitialization": true
 	},
 	"exclude": [
 		"node_modules"
