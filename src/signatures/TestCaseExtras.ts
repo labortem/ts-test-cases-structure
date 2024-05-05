@@ -7,5 +7,5 @@ import { ExpectedThrowKey } from "utils";
  * @see {@link ExpectedThrowKey | `ExpectedThrowKey`} for the expecting to throw error key.
  */
 export type TestCaseExtras = Record<string, any> & {
-  [key in ExpectedThrowKey]?: abstract new (...args: any[]) => Error;
+	[key in ExpectedThrowKey]?: abstract new (...args: any[]) => Error;
 };

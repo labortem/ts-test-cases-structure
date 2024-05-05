@@ -1,23 +1,27 @@
 {
-  "compilerOptions": {
-    "alwaysStrict": true,
+	"compilerOptions": {
+		"alwaysStrict": true,
 
-    "target": "ESNext",
-    "module": "CommonJS",
+		"target": "ESNext",
+		"module": "CommonJS",
 
-    "baseUrl": "src",
+		"baseUrl": "src",
 
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
 
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
 
-    "types": ["@jest/globals"]
-  },
-  "exclude": ["node_modules"]
+		"types": [
+			"@jest/globals"
+		]
+	},
+	"exclude": [
+		"node_modules"
+	]
 }

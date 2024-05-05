@@ -6,6 +6,4 @@ import { Method } from "signatures";
  * @typeParam M - Method to check.
  * @remarks The returned type is `true` if the method does return a value, `false` otherwise.
  */
-export type HasClassMethodReturn<M extends Method> = ReturnType<M> extends void
-  ? false
-  : true;
+export type HasClassMethodReturn<M extends Method> = ReturnType<M> extends void ? false : true;

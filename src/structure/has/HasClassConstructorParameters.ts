@@ -6,5 +6,4 @@ import { Class } from "signatures";
  * @typeParam C - Class to check.
  * @remarks The returned type is `true` if the class does have constructor parameters, `false` otherwise.
  */
-export type HasClassConstructorParameters<C extends Class> =
-  ConstructorParameters<C> extends [] ? false : true;
+export type HasClassConstructorParameters<C extends Class> = ConstructorParameters<C> extends [] ? false : true;

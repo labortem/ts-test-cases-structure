@@ -14,6 +14,4 @@ import { ExpectedThrowKey } from "utils/ExpectedThrowKey";
  * RemoveExpectedThrowFromTestCaseExtras<{ expectedThrow: Error, timeout: number }> // { timeout: number }
  * ```
  */
-export type RemoveExpectedThrowFromTestCaseExtras<
-  E extends TestCaseExtras | void
-> = Omit<E, ExpectedThrowKey>;
+export type RemoveExpectedThrowFromTestCaseExtras<E extends TestCaseExtras | void> = Omit<E, ExpectedThrowKey>;

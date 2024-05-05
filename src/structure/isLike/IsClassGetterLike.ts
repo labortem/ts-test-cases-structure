@@ -1,7 +1,4 @@
-import {
-  HasClassConstructorParameters,
-  HasClassGetterReturn,
-} from "structure/has";
+import { HasClassConstructorParameters, HasClassGetterReturn } from "structure/has";
 import { Class, Getter } from "signatures";
 
 /**
@@ -13,13 +10,9 @@ import { Class, Getter } from "signatures";
  * @typeParam RG - Wether or not the class getter is supposed to return a value.
  * @remarks The returned type is `true` if the class getter matches the expected structure, `false` otherwise.
  */
-export type IsClassGetterLike<
-  C extends Class,
-  G extends Getter,
-  CP extends boolean,
-  GR extends boolean
-> = HasClassConstructorParameters<C> extends CP
-  ? HasClassGetterReturn<G> extends GR
-    ? true
-    : false
-  : false;
+export type IsClassGetterLike<C extends Class, G extends Getter, CP extends boolean, GR extends boolean> =
+	HasClassConstructorParameters<C> extends CP ?
+		HasClassGetterReturn<G> extends GR ?
+			true
+		:	false
+	:	false;

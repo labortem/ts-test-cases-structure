@@ -1,8 +1,4 @@
-import {
-  HasClassConstructorParameters,
-  HasClassMethodParameters,
-  HasClassMethodReturn,
-} from "structure/has";
+import { HasClassConstructorParameters, HasClassMethodParameters, HasClassMethodReturn } from "structure/has";
 import { Class, Method } from "signatures";
 
 /**
@@ -16,15 +12,16 @@ import { Class, Method } from "signatures";
  * @remarks The returned type is `true` if the class method matches the expected structure, `false` otherwise.
  */
 export type IsClassMethodLike<
-  C extends Class,
-  M extends Method,
-  CP extends boolean,
-  MP extends boolean,
-  MR extends boolean
-> = HasClassConstructorParameters<C> extends CP
-  ? HasClassMethodParameters<M> extends MP
-    ? HasClassMethodReturn<M> extends MR
-      ? true
-      : false
-    : false
-  : false;
+	C extends Class,
+	M extends Method,
+	CP extends boolean,
+	MP extends boolean,
+	MR extends boolean,
+> =
+	HasClassConstructorParameters<C> extends CP ?
+		HasClassMethodParameters<M> extends MP ?
+			HasClassMethodReturn<M> extends MR ?
+				true
+			:	false
+		:	false
+	:	false;

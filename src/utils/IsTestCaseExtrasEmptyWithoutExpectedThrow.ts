@@ -14,6 +14,5 @@ import { RemoveExpectedThrowFromTestCaseExtras } from "utils";
  * IsTestCaseExtrasEmptyWithoutExpectedThrow<{ expectedThrow: Error, timeout: number }> // false
  * ```
  */
-export type IsTestCaseExtrasEmptyWithoutExpectedThrow<
-  E extends TestCaseExtras | void
-> = keyof RemoveExpectedThrowFromTestCaseExtras<E> extends never ? true : false;
+export type IsTestCaseExtrasEmptyWithoutExpectedThrow<E extends TestCaseExtras | void> =
+	keyof RemoveExpectedThrowFromTestCaseExtras<E> extends never ? true : false;

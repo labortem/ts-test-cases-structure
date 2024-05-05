@@ -15,5 +15,4 @@ import { ExpectedThrowKey } from "utils";
  * CanTestCaseThrow<{ expectedThrow: Error, timeout: number }> // true
  * ```
  */
-export type CanTestCaseThrow<C extends TestCaseExtras | void> =
-  ExpectedThrowKey extends keyof C ? true : false;
+export type CanTestCaseThrow<C extends TestCaseExtras | void> = ExpectedThrowKey extends keyof C ? true : false;
