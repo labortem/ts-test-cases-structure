@@ -1,5 +1,5 @@
 export { TestCaseOfClassGetter } from "./TestCaseOfClassGetter";
 export { TestCaseOfClassMethod } from "./TestCaseOfClassMethod";
-export { TestCaseOfClassStaticGetter } from "./TestCaseOfClassStaticGetter";
-export { TestCaseOfClassStaticMethod } from "./TestCaseOfClassStaticMethod";
+export { TestCaseOfStaticClassGetter } from "./TestCaseOfStaticClassGetter";
+export { TestCaseOfStaticClassMethod } from "./TestCaseOfStaticClassMethod";
 export { TestCaseOfClassConstructor } from "./TestCaseOfClassConstructor";

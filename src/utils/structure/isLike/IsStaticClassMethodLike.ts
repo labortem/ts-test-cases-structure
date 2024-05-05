@@ -1,4 +1,4 @@
-import { HasClassStaticMethodParameters, HasClassStaticMethodReturn } from "../has";
+import { HasStaticClassMethodParameters, HasStaticClassMethodReturn } from "../has";
 import { Method } from "../../signatures";
 
 /**
@@ -9,9 +9,9 @@ import { Method } from "../../signatures";
  * @typeParam SMR - Wether or not the class static method is supposed to return a value.
  * @remarks The returned type is `true` if the static class method matches the expected structure, `false` otherwise.
  */
-export type IsClassStaticMethodLike<SM extends Method, SMP extends boolean, SMR extends boolean> =
-	HasClassStaticMethodParameters<SM> extends SMP ?
-		HasClassStaticMethodReturn<SM> extends SMR ?
+export type IsStaticClassMethodLike<SM extends Method, SMP extends boolean, SMR extends boolean> =
+	HasStaticClassMethodParameters<SM> extends SMP ?
+		HasStaticClassMethodReturn<SM> extends SMR ?
 			true
 		:	false
 	:	false;

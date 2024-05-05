@@ -1,4 +1,4 @@
-import { IsClassStaticGetterLike } from "../../utils/structure/isLike";
+import { IsStaticClassGetterLike } from "../../utils/structure/isLike";
 import { Getter, TestCaseExtras } from "../../utils/signatures";
 import {
 	CanTestCaseThrow,
@@ -12,21 +12,21 @@ import {
  * @typeParam SG - Static getter to test.
  * @typeParam E - Extra content for the test cases.
  */
-export type TestCaseOfClassStaticGetter<SG extends Getter, E extends TestCaseExtras | void = void> =
+export type TestCaseOfStaticClassGetter<SG extends Getter, E extends TestCaseExtras | void = void> =
 	E extends void ?
-		IsClassStaticGetterLike<SG, false> extends true ? []
-		: IsClassStaticGetterLike<SG, true> extends true ? [SG]
+		IsStaticClassGetterLike<SG, false> extends true ? []
+		: IsStaticClassGetterLike<SG, true> extends true ? [SG]
 		: never
 	: CanTestCaseThrow<E> extends true ?
-		IsClassStaticGetterLike<SG, false> extends true ?
+		IsStaticClassGetterLike<SG, false> extends true ?
 			IsTestCaseExtrasEmptyWithoutExpectedThrow<E> extends true ?
 				[] | [E]
 			:	[RemoveExpectedThrowFromTestCaseExtras<E>] | [E]
-		: IsClassStaticGetterLike<SG, true> extends true ?
+		: IsStaticClassGetterLike<SG, true> extends true ?
 			IsTestCaseExtrasEmptyWithoutExpectedThrow<E> extends true ?
 				[SG] | [E]
 			:	[SG, RemoveExpectedThrowFromTestCaseExtras<E>] | [E]
 		:	never
-	: IsClassStaticGetterLike<SG, false> extends true ? [E]
-	: IsClassStaticGetterLike<SG, true> extends true ? [SG, E]
+	: IsStaticClassGetterLike<SG, false> extends true ? [E]
+	: IsStaticClassGetterLike<SG, true> extends true ? [SG, E]
 	: never;
