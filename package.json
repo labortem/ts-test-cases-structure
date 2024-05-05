@@ -1,0 +1,17 @@
+{
+  "name": "ts_test_cases_structure",
+  "displayName": "TS test cases structure",
+  "description": "TypeScript type structure for test cases",
+  "author": {
+    "name": "Labortem",
+    "url": "https://github.com/labortem"
+  },
+  "scripts": {
+    "pretty": "prettier --write .",
+    "refresh-node-modules": "rm -rf node_modules && npm install"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-multiline-arrays": "^3.0.4"
+  }
+}
