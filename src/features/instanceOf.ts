@@ -1,4 +1,4 @@
-import { Class } from "utils/signatures";
+import { Class } from "../utils/signatures";
 
 /**
  * Get the instance type of a class.
