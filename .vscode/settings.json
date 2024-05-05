@@ -1,0 +1,17 @@
+{
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
+	"material-icon-theme.files.associations": {
+		"index.ts": "tsconfig"
+	},
+	"local-history.exclude": [
+		".history/**",
+		".vscode/**",
+		"node_modules/**"
+	],
+	"files.exclude": {
+		"node_modules": true,
+		"package-lock.json": true,
+		".history": true
+	}
+}

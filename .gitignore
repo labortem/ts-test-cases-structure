@@ -1,0 +1,12 @@
+# Sandbox
+sandbox
+
+# Node.js
+node_modules
+package-lock.json
+
+# System files
+.DS_Store
+
+# VScode extensions
+.history
