@@ -1,10 +1,10 @@
-import { IsClassConstructorLike } from "../../utils/structure/isLike";
-import { Class, TestCaseExtras } from "../../utils/signatures";
+import { IsClassConstructorLike } from "utils/structure/isLike";
+import { Class, TestCaseExtras } from "utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "../../utils/utils";
+} from "utils/utils";
 
 /**
  * Test case structure of a class constructor

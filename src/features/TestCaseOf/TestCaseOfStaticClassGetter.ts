@@ -1,10 +1,10 @@
-import { IsStaticClassGetterLike } from "../../utils/structure/isLike";
-import { Getter, TestCaseExtras } from "../../utils/signatures";
+import { IsStaticClassGetterLike } from "utils/structure/isLike";
+import { Getter, TestCaseExtras } from "utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "../../utils/utils";
+} from "utils/utils";
 
 /**
  * Test case structure of a class static getter.

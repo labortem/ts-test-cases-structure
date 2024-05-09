@@ -1,5 +1,5 @@
-import { HasClassConstructorParameters, HasClassGetterReturn } from "../has";
-import { Class, Getter } from "../../signatures";
+import { HasClassConstructorParameters, HasClassGetterReturn } from "utils/structure/has";
+import { Class, Getter } from "utils/signatures";
 
 /**
  * Check if the given class getter matches the expected structure.

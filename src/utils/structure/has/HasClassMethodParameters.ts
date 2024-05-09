@@ -1,4 +1,4 @@
-import { Method } from "../../signatures";
+import { Method } from "utils/signatures";
 
 /**
  * Check if the given class method does have parameters.

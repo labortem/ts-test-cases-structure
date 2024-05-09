@@ -1,4 +1,4 @@
-import { TestCaseExtras } from "../signatures";
+import { TestCaseExtras } from "utils/signatures";
 import { ExpectedThrowKey } from ".";
 
 /**
