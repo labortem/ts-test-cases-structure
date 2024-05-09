@@ -1,0 +1,10 @@
+.git
+
+.vscode
+src
+.gitignore
+.npmignore
+.npmrc
+.prettierrc
+README.md
+tsconfig.json
