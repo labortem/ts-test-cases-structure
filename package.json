@@ -6,15 +6,20 @@
 		"name": "Labortem",
 		"url": "https://github.com/labortem"
 	},
-	"types": "types/main.d.ts",
+	"types": "build/app.d.ts",
 	"scripts": {
 		"pretty": "prettier --write .",
+		"build": "webpack --mode development --config config/webpack/webpack.prod.ts",
 		"refresh-node-modules": "rm -rf node_modules && npm install"
 	},
 	"devDependencies": {
+		"@types/node": "^20.12.11",
 		"@types/webpack": "^5.28.5",
 		"prettier": "^3.2.5",
 		"prettier-plugin-multiline-arrays": "^3.0.4",
-		"webpack": "^5.91.0"
+		"ts-loader": "^9.5.1",
+		"ts-node": "^10.9.2",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
 	}
 }
