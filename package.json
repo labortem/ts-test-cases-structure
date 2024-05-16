@@ -14,7 +14,8 @@
 	"scripts": {
 		"pretty": "prettier --write .",
 		"build": "webpack --mode production --config config/webpack/webpack.prod.ts --progress",
-		"prepare": "npm-run-all pretty build"
+		"prepack": "npm-run-all pretty build",
+		"prepublishOnly": "npm-run-all pretty build"
 	},
 	"devDependencies": {
 		"@types/node": "^20.12.11",
