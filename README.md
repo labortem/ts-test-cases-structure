@@ -16,5 +16,5 @@ Supported test cases structures:
 
 ### How to use it?
 
-Download the package as `npm i -D @labortem/ts_test_cases_structure`. Take note this package is hosted in the GitHub NPM
+Download the package as `npm i -D @labortem/ts-test-cases-structure`. Take note this package is hosted in the GitHub NPM
 Registry (`https://npm.pkg.github.com`).
