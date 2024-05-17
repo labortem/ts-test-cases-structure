@@ -1,0 +1,30 @@
+name: pretty-on-push
+on:
+    push:
+        branches:
+            - dev
+
+jobs:
+    pretty:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "14"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run pretty script
+              run: npm run pretty
+
+            - name: Commit changes
+              uses: EngBug/add-and-commit@v9
+              with:
+                  commit: --signoff
+                  default_author: user_info
+                  message: "[ACTIONS] Pretty repo on push"
