@@ -25,12 +25,12 @@ jobs:
             - name: Pack production build
               id: pack
               run: |
-                  echo "npmpackjsonoutput=$(npm pack --json)" >> $GITHUB_OUTPUT
+                  echo "npmpackjsonoutput=$(npm pack --json)" >> "$GITHUB_OUTPUT"
 
             - name: Get pack file name
               id: npmpackjsonoutput
               run: |
-                  echo $npmpackjsonoutput | grep "filename" | awk -F': "' '{print $2}' | awk -F'"' '{print $1}'" >> $GITHUB_OUTPUT
+                  echo $npmpackjsonoutput | grep "filename" | awk -F': "' '{print $2}' | awk -F'"' '{print $1}'" >> "$GITHUB_OUTPUT"
 
             - name: Unpack production pack
               run: tar -xvf "${{ steps.npmpackjsonoutput.outputs.packfilename }}.tgz -C package"
