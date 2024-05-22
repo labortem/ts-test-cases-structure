@@ -12,3 +12,6 @@ node_modules
 
 # VScode extensions
 .history
+
+# Build tgz
+/labortem-ts-test-cases-structure-*.tgz
