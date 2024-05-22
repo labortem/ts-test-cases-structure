@@ -9,5 +9,5 @@ import { Class } from "utils/signatures";
  * @remarks That function MUST NOT be used at runtime, as it is only used for type-checking purposes in the test suites.
  */
 export function instanceOf<C extends Class>(c: C): InstanceType<C> {
-return {} as any;
+	return {} as any;
 }
