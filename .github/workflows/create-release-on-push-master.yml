@@ -22,15 +22,20 @@ jobs:
             - name: Install dependencies
               run: npm i
 
-            - name: Retrieve package information
-              id: package
-              uses: codex-team/action-nodejs-package-info@v1.1
-
             - name: Pack production build
-              run: npm pack
+              id: pack
+              run: |
+                  npmpackjsonoutput=$(npm pack --json)
+                  echo "npmpackjsonoutput=$npmpackjsonoutput" >> $GITHUB_ENV
+
+            - name: Get pack file name
+              id: npmpackjsonoutput
+              run: |
+                  packfilename=$(echo "${{ steps.pack.outputs.npmpackjsonoutput }}" | jq -r '.name')
+                  echo "packfilename=$packfilename" >> $GITHUB_ENV
 
             - name: Unpack production pack
-              run: tar -xvf "${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.tgz -C package"
+              run: tar -xvf "${{ steps.npmpackjsonoutput.outputs.packfilename }}.tgz -C package"
 
             - name: Create release
               id: create_release
