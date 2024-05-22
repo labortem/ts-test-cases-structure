@@ -1,4 +1,6 @@
-name: pretty-on-push
+name: pretty-on-push-dev
+run-name: Pretty on push on dev
+
 on:
     push:
         branches:
