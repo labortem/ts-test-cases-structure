@@ -30,7 +30,7 @@ jobs:
             - name: Get pack file name
               id: npmpackjsonoutput
               run: |
-                  echo "packfilename=$(${{ fromJson( steps.pack.outputs.npmpackjsonoutput ).filename }})" >> $GITHUB_ENV
+                  echo $npmpackjsonoutput | grep "filename" | awk -F': "' '{print $2}' | awk -F'"' '{print $1}'" >> $GITHUB_ENV
 
             - name: Unpack production pack
               run: tar -xvf "${{ steps.npmpackjsonoutput.outputs.packfilename }}.tgz -C package"
