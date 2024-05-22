@@ -8,6 +8,7 @@ on:
 
 jobs:
     pretty:
+        name: Pretty
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
