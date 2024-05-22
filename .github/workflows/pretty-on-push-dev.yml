@@ -1,5 +1,4 @@
 name: pretty-on-push-dev
-run-name: Pretty on push on dev
 
 on:
     push:
