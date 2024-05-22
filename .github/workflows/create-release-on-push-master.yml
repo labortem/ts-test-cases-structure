@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - master
+            - dev
 
 jobs:
     create-release:
@@ -21,8 +22,15 @@ jobs:
             - name: Install dependencies
               run: npm i
 
-            - name: Run production build
-              run: npm run build
+            - name: Retrieve package information
+              id: package
+              uses: codex-team/action-nodejs-package-info@v1.1
+
+            - name: Pack production build
+              run: npm pack
+
+            - name: Unpack production pack
+              run: tar -xvf "${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.tgz -C package"
 
             - name: Create release
               id: create_release
@@ -31,27 +39,27 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   tag_name: ${{ github.event.head_commit.message }}
-                  release_name: v${{ github.event.head_commit.message }}
+                  release_name: ${{ github.event.head_commit.message }}
                   body: |
                       <!--- RELEASE DRAFT FROM ${{ github.event.head_commit.message }}
 
                       Checklist:
-                      - The release version is correct:
-                      - Release tag,
-                      - Release name,
-                      - Build add name,
-                      - The asset ZIP file contains at least and only `manifest.json`, `README.md` and `main.js` files. -->
+                      - The release tag and name is correct (follows the semantic versionning convention),
+                      - The asset ZIP file contains all and only the files that the package needs,
+                      - The changelog is filled.
 
-                      # CHANGELOG - v${{ github.event.head_commit.message }}
+                      -->
+
+                      # CHANGELOG - ${{ github.event.head_commit.message }} (${{ github.sha }})
 
                       - ...
                   draft: true
                   prerelease: false
 
-            - name: Join assets to release
+            - name: Add assets to release
               uses: dwenegar/upload-release-assets@v1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   release_id: ${{ steps.create_release.outputs.id }}
-                  assets_path: build
+                  assets_path: package
