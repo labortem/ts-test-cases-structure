@@ -1,17 +1,19 @@
 # Build
-build
+/build
 
 # Sandbox
-sandbox
+/sandbox
 
 # Node.js
-node_modules
+/node_modules
 
 # System files
 .DS_Store
 
 # VScode extensions
-.history
+/.history
 
-# Build tgz
+# Build files
 /labortem-ts-test-cases-structure-*.tgz
+/package
+/package *
