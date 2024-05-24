@@ -1,0 +1,33 @@
+name: Publish on release
+
+on:
+    release:
+        types: published
+
+jobs:
+    publish:
+        name: Publish
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Check release from `master` branch
+              run: |
+                  if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
+                    echo "Release not created from master. Workflow is aborted."
+                    exit 1
+                  fi
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "20.13.1"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Publish to GitHub Node.js package registry
+              run: npm publish --dry-run
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
