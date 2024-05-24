@@ -1,10 +1,10 @@
 name: create-release-on-push-master
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - master
-            - dev
 
 permissions:
     contents: write
