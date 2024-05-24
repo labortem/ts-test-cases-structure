@@ -9,6 +9,13 @@ jobs:
         name: Publish
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Clean current working directory
+              run: |
+                  rm -rf .
+
             - name: Check release from `master` branch
               run: |
                   if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
@@ -17,7 +24,7 @@ jobs:
                   fi
 
             - name: Setup Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4.0.2
               with:
                   node-version: "20.13.1"
 
@@ -33,6 +40,7 @@ jobs:
                   gunzip -c *.tgz | tar xvf -
 
             - name: Publish to GitHub Node.js package registry
-              run: npm publish --dry-run
+              run: |
+                  npm publish --dry-run
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
