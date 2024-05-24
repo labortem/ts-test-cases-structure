@@ -6,6 +6,9 @@ on:
             - master
             - dev
 
+permissions:
+    contents: write
+
 jobs:
     create-release:
         name: Create release
