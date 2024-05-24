@@ -1,4 +1,4 @@
-name: pretty-on-push-dev
+name: Pretty on push dev
 
 on:
     push:
