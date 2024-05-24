@@ -37,8 +37,7 @@ jobs:
 
             - name: Unpack production pack
               run: |
-                  ls -lsa
-                  tar -xvf ${{ steps.package_file_name.outputs.package_file_name }} -C package
+                  tar -xvf ./${{ steps.package_file_name.outputs.package_file_name }} -C package
 
             - name: Create release
               id: create_release
