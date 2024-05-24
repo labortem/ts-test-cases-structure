@@ -20,7 +20,8 @@ jobs:
                   node-version: "20.13.1"
 
             - name: Install dependencies
-              run: npm i
+              run: |
+                  npm i
 
             - name: Pack production build
               id: pack
@@ -37,7 +38,7 @@ jobs:
 
             - name: Unpack production pack
               run: |
-                  tar -xvf ./${{ steps.package_file_name.outputs.package_file_name }} -C package
+                  gunzip -c ${{ steps.package_file_name.outputs.package_file_name }} | tar xvf -
 
             - name: Create release
               id: create_release
