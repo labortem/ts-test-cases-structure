@@ -9,9 +9,6 @@ jobs:
         name: Publish
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
             - name: Check release from `master` branch
               run: |
                   if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
@@ -24,8 +21,16 @@ jobs:
               with:
                   node-version: "20.13.1"
 
-            - name: Install dependencies
-              run: npm ci
+            - name: Download latest release
+              uses: robinraju/release-downloader@v1.10
+              with:
+                  latest: true
+                  fileName: "*.tgz"
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Unpack latest release
+              run: |
+                  gunzip -c *.tgz | tar xvf -
 
             - name: Publish to GitHub Node.js package registry
               run: npm publish --dry-run
