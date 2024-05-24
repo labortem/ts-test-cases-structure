@@ -33,10 +33,10 @@ jobs:
             - name: Get pack file name
               id: package_file_name
               run: |
-                  echo "${{ steps.pack.outputs.npm_pack_output }}" | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | awk '{print "package_file_name=\"" $0 "\""}' >> $GITHUB_OUTPUT >> $GITHUB_OUTPUT
+                  echo "${{ steps.pack.outputs.npm_pack_output }}" | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | awk '{print "package_file_name="}' >> $GITHUB_OUTPUT >> $GITHUB_OUTPUT
 
             - name: Unpack production pack
-              run: tar -xvf "${{ steps.package_file_name.outputs.package_file_name }}.tgz -C package"
+              run: tar -xvf "${{ steps.package_file_name.outputs.package_file_name }}" -C package"
 
             - name: Create release
               id: create_release
