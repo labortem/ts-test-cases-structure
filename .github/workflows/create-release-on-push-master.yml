@@ -31,12 +31,12 @@ jobs:
                   echo "EOF" >> $GITHUB_OUTPUT
 
             - name: Get pack file name
-              id: npmpackjsonoutput
+              id: packagefilename
               run: |
-                  echo ${{ steps.pack.outputs.npm_pack_output }} | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' >> "$GITHUB_OUTPUT"
+                  echo "${{ steps.pack.outputs.npm_pack_output }}" | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' >> $GITHUB_OUTPUT
 
             - name: Unpack production pack
-              run: tar -xvf "${{ steps.npmpackjsonoutput.outputs.packfilename }}.tgz -C package"
+              run: tar -xvf "${{ steps.packagefilename.outputs.packfilename }}.tgz -C package"
 
             - name: Create release
               id: create_release
