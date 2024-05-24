@@ -23,17 +23,17 @@ jobs:
                     #exit 1 - Skipping for test
                   fi
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4.0.2
-              with:
-                  node-version: "20.13.1"
-
             - name: Download latest release
               uses: robinraju/release-downloader@v1.10
               with:
                   latest: true
                   fileName: "*.tgz"
                   token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4.0.2
+              with:
+                  node-version: "20.13.1"
 
             - name: Unpack latest release
               run: |
