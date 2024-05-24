@@ -39,10 +39,6 @@ jobs:
               run: |
                   echo "${{ steps.pack.outputs.npm_pack_output }}" | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | awk '{print "package_file_name=" $0}' >> $GITHUB_OUTPUT
 
-            - name: Unpack production pack
-              run: |
-                  gunzip -c ${{ steps.package_file_name.outputs.package_file_name }} | tar xvf -
-
             - name: Create release
               id: create_release
               uses: actions/create-release@v1
@@ -73,4 +69,4 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   release_id: ${{ steps.create_release.outputs.id }}
-                  assets_path: package
+                  assets_path: ${{ steps.package_file_name.outputs.package_file_name }}
