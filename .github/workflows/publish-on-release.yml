@@ -9,15 +9,9 @@ jobs:
         name: Publish
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4.1.6
-
-            - name: Clean current working directory
-              run: |
-                  rm -rf .
-
             - name: Check release from `master` branch
               run: |
+                  ls -lsa
                   if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
                     echo "Release not created from master. Workflow is aborted."
                     #exit 1 - Skipping for test
