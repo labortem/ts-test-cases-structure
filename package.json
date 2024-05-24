@@ -11,9 +11,6 @@
 	"files": [
 		"build"
 	],
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
-	},
 	"scripts": {
 		"pretty": "prettier --write .",
 		"build": "webpack --mode production --config config/webpack/webpack.prod.ts --progress"
