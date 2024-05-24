@@ -25,7 +25,11 @@ jobs:
             - name: Pack production build
               id: pack
               run: |
-                  echo "npm_pack_output=${npm pack --json}" >> $GITHUB_OUTPUT
+                  {
+                    echo 'JSON_RESPONSE<<EOF'
+                    npm pack --json
+                    echo EOF
+                  } >> $GITHUB_OUTPUT
 
             - name: Get pack file name
               id: npmpackjsonoutput
