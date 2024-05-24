@@ -13,9 +13,7 @@
 	],
 	"scripts": {
 		"pretty": "prettier --write .",
-		"build": "webpack --mode production --config config/webpack/webpack.prod.ts --progress",
-		"prepack": "npm-run-all pretty build",
-		"prepublishOnly": "npm-run-all pretty build"
+		"build": "webpack --mode production --config config/webpack/webpack.prod.ts --progress"
 	},
 	"devDependencies": {
 		"@types/node": "^20.12.11",

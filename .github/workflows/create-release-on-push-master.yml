@@ -29,6 +29,7 @@ jobs:
             - name: Pack production build
               id: pack
               run: |
+                  npm run build
                   npm_pack_output=$(npm pack --json)
                   echo "npm_pack_output<<EOF" >> $GITHUB_OUTPUT
                   echo "$npm_pack_output" >> $GITHUB_OUTPUT
