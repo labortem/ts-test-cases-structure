@@ -10,9 +10,40 @@ permissions:
     contents: write
 
 jobs:
+    check-existence-on-registry:
+        name: Checking existence of the version on the registry
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Check
+              run: |
+                  name=$(npm pkg get name | xargs)
+                  version=$(npm pkg get version | xargs)
+
+                  package="${name}@${version}"
+
+                  versions=$(npm show $name versions)
+
+                  if echo "$versions" | grep -q "'$version'"; then
+                    registry=$(npm config get registry)
+
+                    echo "::error title=Version already existing::{$package does already exist on registry '$registry'. Reverting the commit."
+
+                    exit 1
+                  fi
+
+                  exit 0
+
     create-release:
         name: Create release
         runs-on: ubuntu-latest
+
+        needs: check-existence-on-registry
+        if: success()
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4.1.6
@@ -71,3 +102,47 @@ jobs:
               with:
                   release_id: ${{ steps.create_release.outputs.id }}
                   assets_path: ${{ steps.package_file_name.outputs.package_file_name }}
+
+    revert-merge-on-master:
+        name: Revert merge on master
+        runs-on: ubuntu-latest
+
+        needs: check-existence-on-registry
+        if: failure()
+
+        steps:
+            - name: Revert merge on master
+              id: revert_merge
+              run: |
+                  git revert ${{ github.sha }}
+                  git push origin master
+
+                  HASH=$(git rev-parse HEAD)
+
+                  echo "revert-sha=$HASH" >> $GITHUB_ENV
+
+            - name: Get package data
+              id: get_package_data
+              run: |
+                  NAME=$(npm pkg get name | xargs)
+                  VERSION=$(npm pkg get version | xargs)
+                  REGISTRY=$(npm config get registry)
+
+                  echo "package_name=$NAME" >> $GITHUB_ENV
+                  echo "package_version=$VERSION" >> $GITHUB_ENV
+                  echo "registry=$REGISTRY" >> $GITHUB_ENV
+
+            - name: Open hotfix issue
+              uses: GuillaumeFalourd/open-issue-action@v1
+              with:
+                  access-token: ${{ secrets.GITHUB_TOKEN }}
+                  repo-owner: ${{ github.repository_owner }}
+                  repo-name: ${{ github.event.repository.name }}
+                  issue-title: "[ACTIONS] - Master merge reverted due to existing version on registry"
+                  issue-body: |
+                      :x: This issue was automatically created by Github Action (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
+
+                      The package '${{ steps.get_package_data.outputs.package_name }}@${{ steps.get_package_data.outputs.package_version }}' does already exist on the registry '${{ steps.get_package_data.outputs.registry }}'.
+                      To prevent deployment issues, the merge on the master branch (${{github.sha}}) has been reverted as ${{steps.revert_merge.outputs.revert-sha}}.
+
+                      Please update the package version and merge again.
