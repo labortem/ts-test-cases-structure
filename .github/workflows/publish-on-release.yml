@@ -16,6 +16,22 @@ jobs:
                     #exit 1 - Skipping for test
                   fi
 
+            - name: Check existing of the version on the registry
+              run: |
+                  name=$(npm pkg get name | xargs)
+                  version=$(npm pkg get version | xargs)
+
+                  package="${name}@${version}"
+
+                  result=$(npm search "$package")
+
+                  if [[ "$result" != *"No matches found for \"$package\""* ]]; then
+                    registry=$(npm config get registry)
+
+                    echo "${package} does already exist on registry '${registry}'"
+                    exit 0
+                  fi
+
             - name: Checkout code
               uses: actions/checkout@v4.1.6
               with:
