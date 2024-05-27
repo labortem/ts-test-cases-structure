@@ -13,7 +13,7 @@
 	],
 	"scripts": {
 		"pretty": "prettier --write .",
-		"build": "webpack --mode production --config config/webpack/webpack.prod.ts --progress"
+		"build": "webpack --config config/webpack/webpack.prod.ts --progress"
 	},
 	"devDependencies": {
 		"@types/node": "^20.12.11",
