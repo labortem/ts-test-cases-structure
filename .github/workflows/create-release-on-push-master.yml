@@ -20,8 +20,8 @@ jobs:
 
             - name: Check
               run: |
-                  name=$(npm pkg get name | xargs)
-                  version=$(npm pkg get version | xargs)
+                  name=is-odd
+                  version=3.0.1
 
                   package="${name}@${version}"
 
@@ -150,3 +150,5 @@ jobs:
                       To prevent deployment issues, the merge on the master branch (${{github.sha}}) has been reverted as ${{steps.revert_merge.outputs.revert-sha}}.
 
                       Please update the package version and merge again.
+                  issue-labels: Hotfix,Actions
+                  issue-assignees: ${{ github.actor }}
