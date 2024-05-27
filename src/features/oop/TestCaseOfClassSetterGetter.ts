@@ -5,6 +5,7 @@ import {
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
 } from "utils/utils";
+import { TestCaseOfClassGetter, TestCaseOfClassSetter } from ".";
 
 /**
  * Test case structure of a class setter and getter.
@@ -13,6 +14,7 @@ import {
  * @typeParam S - Setter to test.
  * @typeParam G - Getter to test.
  * @typeParam E - Extra content for the test cases.
+ * @remarks This type is for class properties that does have both a setter and a getter. If you do only have a setter, use {@link TestCaseOfClassSetter | `TestCaseOfClassSetter`} instead, or if you have only a getter, use {@link TestCaseOfClassGetter | `TestCaseOfClassGetter`} instead.
  */
 export type TestCaseOfClassSetterGetter<
 	C extends Class,

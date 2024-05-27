@@ -4,6 +4,7 @@ import {
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
 } from "utils/utils";
+import { TestCaseOfClassStaticGetter, TestCaseOfClassStaticSetter } from ".";
 
 /**
  * Test case structure of a class static setter and getter.
@@ -11,8 +12,9 @@ import {
  * @typeParam SS - Static setter to test.
  * @typeParam SG - Static getter to test.
  * @typeParam E - Extra content for the test cases.
+ * @remarks This type is for static properties that does have both a setter and a getter. If you do only have a setter, use {@link TestCaseOfClassStaticSetter | `TestCaseOfClassStaticSetter`} instead, or if you do only have a getter, use {@link TestCaseOfClassStaticGetter | `TestCaseOfClassStaticGetter`} instead.
  */
-export type TestCaseOfStaticClassSetterGetter<
+export type TestCaseOfClassStaticSetterGetter<
 	SS extends Setter,
 	SG extends Getter = SS,
 	E extends TestCaseExtras | void = void,
