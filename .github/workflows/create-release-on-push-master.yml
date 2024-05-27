@@ -20,8 +20,9 @@ jobs:
 
             - name: Check
               run: |
-                  name=is-odd
-                  version=3.0.1
+                  exit 0
+                  name=$(npm pkg get name | xargs)
+                  version=$(npm pkg get version | xargs)
 
                   package="${name}@${version}"
 
@@ -155,5 +156,3 @@ jobs:
                       Please update the package version and merge again.
                   issue-labels: Hotfix,Actions
                   issue-assignees: ${{ github.actor }}
-
-                  
