@@ -1,6 +1,10 @@
+export { instanceOf } from "./instanceOf";
+export { TestCaseOfClassConstructor } from "./TestCaseOfClassConstructor";
 export { TestCaseOfClassGetter } from "./TestCaseOfClassGetter";
 export { TestCaseOfClassMethod } from "./TestCaseOfClassMethod";
+export { TestCaseOfClassSetter } from "./TestCaseOfClassSetter";
+export { TestCaseOfClassSetterGetter } from "./TestCaseOfClassSetterGetter";
 export { TestCaseOfStaticClassGetter } from "./TestCaseOfStaticClassGetter";
 export { TestCaseOfStaticClassMethod } from "./TestCaseOfStaticClassMethod";
-export { TestCaseOfClassConstructor } from "./TestCaseOfClassConstructor";
-export { instanceOf } from "./instanceOf";
+export { TestCaseOfStaticClassSetter } from "./TestCaseOfStaticClassSetter";
+export { TestCaseOfStaticClassSetterGetter } from "./TestCaseOfStaticClassSetterGetter";

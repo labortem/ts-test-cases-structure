@@ -1,4 +1,4 @@
-import { IsClassConstructorLike } from "utils/structure/isLike/IsClassConstructorLike";
+import { IsClassConstructorLike } from "utils/structure/isLike";
 import { Class, TestCaseExtras } from "utils/signatures";
 import {
 	CanTestCaseThrow,
