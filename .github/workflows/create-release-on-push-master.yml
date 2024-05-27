@@ -20,7 +20,7 @@ jobs:
 
             - name: Check
               run: |
-                  exit 0
+                  exit 1
                   name=$(npm pkg get name | xargs)
                   version=$(npm pkg get version | xargs)
 
