@@ -15,7 +15,13 @@
 		"strictBindCallApply": true,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
-		"strictPropertyInitialization": true
+		"strictPropertyInitialization": true,
+
+		"paths": {
+			"@ts-test-cases-structure": [
+				"./main"
+			]
+		}
 	},
 	"exclude": [
 		"node_modules"
