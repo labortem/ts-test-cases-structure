@@ -6,7 +6,6 @@ on:
             - dev
 
 permissions:
-    actions: write
     contents: write
 
 jobs:
@@ -31,6 +30,6 @@ jobs:
             - name: Commit changes
               uses: EndBug/add-and-commit@v9
               with:
-                  author_name: $ACTIONS_COMMIT_USER_NAME
-                  author_email: $ACTIONS_COMMIT_USER_EMAIL
+                  author_name: ${{ env.ACTIONS_COMMIT_USER_NAME }}
+                  author_email: ${{ env.ACTIONS_COMMIT_USER_EMAIL }}
                   message: "[ACTIONS] Pretty repo on push dev"
