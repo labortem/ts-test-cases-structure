@@ -35,3 +35,5 @@ jobs:
                   author_name: ${{ env.ACTIONS_COMMIT_USER_NAME }}
                   author_email: ${{ env.ACTIONS_COMMIT_USER_EMAIL }}
                   message: "[ACTIONS] Pretty repo on push dev"
+
+                  
