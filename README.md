@@ -9,11 +9,11 @@ This package is used to describe unit test cases structure.
 Supported test cases structures:
 
 -   Object-Oriented Programming:
-    -   ExampleClass constructor
-    -   ExampleClass getter
-    -   ExampleClass method
+    -   Class constructor
+    -   Class method
+    -   Class getter / setter
     -   Static class method
-    -   Static class getter
+    -   Static class getter / setter
 
 ### How to use it
 
