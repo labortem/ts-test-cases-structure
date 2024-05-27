@@ -27,6 +27,8 @@ module.exports = <Configuration>{
 					compilerOptions: {
 						declaration: true,
 						declarationDir: paths.outTypesFolder,
+						allowUnreachableCode: false,
+						allowUnusedLabels: false,
 					},
 					onlyCompileBundledFiles: true,
 				},
