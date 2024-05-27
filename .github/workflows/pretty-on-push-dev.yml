@@ -34,3 +34,6 @@ jobs:
                   committer_name: $ACTIONS_COMMIT_USER_NAME
                   committer_email: $ACTIONS_COMMIT_USER_EMAIL
                   message: "[ACTIONS] Pretty repo on push dev"
+
+
+                  
