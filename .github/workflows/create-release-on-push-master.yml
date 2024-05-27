@@ -25,7 +25,11 @@ jobs:
 
                   package="${name}@${version}"
 
-                  versions=$(npm show $name versions)
+                  {
+                    versions=$(npm show $name versions)
+                  } || {
+                    exit 0
+                  }
 
                   if echo "$versions" | grep -q "'$version'"; then
                     registry=$(npm config get registry)

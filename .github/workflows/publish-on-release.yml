@@ -16,6 +16,11 @@ jobs:
                     #exit 1 - Skipping for test
                   fi
 
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+              with:
+                  path: checkout
+
             - name: Checking existence of the version on the registry
               run: |
                   name=$(npm pkg get name | xargs)
@@ -23,7 +28,11 @@ jobs:
 
                   package="${name}@${version}"
 
-                  versions=$(npm show $name versions)
+                  {
+                    versions=$(npm show $name versions)
+                  } || {
+                    exit 0
+                  }
 
                   if echo "$versions" | grep -q "'$version'"; then
                     registry=$(npm config get registry)
@@ -31,11 +40,6 @@ jobs:
                     echo "::error title=Version already existing::{$package does already exist on registry '$registry'"
                     exit 1
                   fi
-
-            - name: Checkout code
-              uses: actions/checkout@v4.1.6
-              with:
-                  path: checkout
 
             - name: Download latest release
               uses: robinraju/release-downloader@v1.10
