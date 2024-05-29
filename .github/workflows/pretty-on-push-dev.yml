@@ -26,8 +26,13 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
+            - name: Ignore Github Action workflows
+              run: |
+                  echo "\n.github/workflows" >> .prettierignore
+
             - name: Run pretty script
-              run: npm run pretty
+              run: |
+                  npm run pretty
 
             - name: Commit changes
               uses: EndBug/add-and-commit@v9
