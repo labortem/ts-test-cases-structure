@@ -30,13 +30,13 @@ jobs:
               run: |
                   printf "\n.github/workflows" >> .prettierignore
 
-            - name: Ignore .prettierignore modifications
-              run: |
-                  printf "\n.prettierignore\n.gitignore" >> .gitignore
-
             - name: Run pretty script
               run: |
                   npm run pretty
+
+            - name: Cancel edition of .prettierignore
+              run: |
+                  git checkout -- .prettierignore
 
             - name: Commit changes
               uses: EndBug/add-and-commit@v9
@@ -45,4 +45,4 @@ jobs:
                   author_email: ${{ env.ACTIONS_COMMIT_USER_EMAIL }}
                   message: "[ACTIONS] Pretty repo on push dev"
 
-                  
+
