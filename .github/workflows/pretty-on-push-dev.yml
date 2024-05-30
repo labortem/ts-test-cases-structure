@@ -28,7 +28,11 @@ jobs:
 
             - name: Ignore Github Action workflows
               run: |
-                  echo "\n.github/workflows" >> .prettierignore
+                  printf "\n.github/workflows" >> .prettierignore
+
+            - name: Ignore .prettierignore modifications
+              run: |
+                  printf "\n.prettierignore\n.gitignore" >> .gitignore
 
             - name: Run pretty script
               run: |
@@ -40,6 +44,5 @@ jobs:
                   author_name: ${{ env.ACTIONS_COMMIT_USER_NAME }}
                   author_email: ${{ env.ACTIONS_COMMIT_USER_EMAIL }}
                   message: "[ACTIONS] Pretty repo on push dev"
-
 
                   
