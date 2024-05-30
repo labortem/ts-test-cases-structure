@@ -17,3 +17,5 @@
 /labortem-ts-test-cases-structure-*.tgz
 /package
 /package *
+.prettierignore
+.gitignore
