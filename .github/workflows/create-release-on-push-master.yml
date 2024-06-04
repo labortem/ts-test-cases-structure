@@ -121,8 +121,8 @@ jobs:
             - name: Revert merge on master
               id: revert_merge
               run: |
-                  git config --global user.name ${{ env.ACTIONS_COMMIT_USER_NAME }}
-                  git config --global user.email ${{ env.ACTIONS_COMMIT_USER_EMAIL }}
+                  git config --global user.name github-actions
+                  git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
 
                   git revert ${{ github.sha }}
                   git push origin master
@@ -148,7 +148,7 @@ jobs:
                   access-token: ${{ secrets.GITHUB_TOKEN }}
                   repo-owner: ${{ github.repository_owner }}
                   repo-name: ${{ github.event.repository.name }}
-                  issue-title: "[ACTIONS] - Master merge reverted due to existing version on registry"
+                  issue-title: "[ACTIONS] Master merge reverted due to existing version on registry"
                   issue-body: |
                       :x: This issue was automatically created by Github Action (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
 
