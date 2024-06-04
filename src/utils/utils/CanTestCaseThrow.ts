@@ -16,4 +16,3 @@ import { ExpectedThrowKey } from ".";
  * ```
  */
 export type CanTestCaseThrow<C extends TestCaseExtras | void> = ExpectedThrowKey extends keyof C ? true : false;
-
