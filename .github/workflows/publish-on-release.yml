@@ -13,7 +13,7 @@ jobs:
               run: |
                   if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
                     echo "Release not created from master. Workflow is aborted."
-                    #exit 1 - Skipping for test
+                    exit 1 - Skipping for test
                   fi
 
             - name: Checkout code
@@ -65,6 +65,6 @@ jobs:
             - name: Publish to GitHub Node.js package registry
               run: |
                   cd release/package
-                  npm publish --dry-run
+                  npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
