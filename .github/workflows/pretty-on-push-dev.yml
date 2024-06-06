@@ -43,9 +43,13 @@ jobs:
                   echo 'gpg --batch --pinentry-mode=loopback --passphrase $GPG_PASSPHRASE $@' >> /tmp/gpg.sh
                   chmod +x /tmp/gpg.sh
 
-            - name: Test sign
+            - name: Commit changes
               run: |
-                  git add -A
+                  {
+                    git add -A
+                  } || {
+                    exit 0
+                  }
                   git commit -S -m "[ACTIONS] Pretty on push dev"
                   git push origin
               env:
