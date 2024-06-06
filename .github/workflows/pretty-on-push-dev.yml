@@ -52,7 +52,13 @@ jobs:
             - name: Commit changes
               uses: EndBug/add-and-commit@v9.1.4
               with:
+                  author_name: ${{ vars.LABORTEM_BOT_USERNAME }}
+                  author_email: ${{ vars.LABORTEM_BOT_EMAIL }}
                   committer_name: ${{ vars.LABORTEM_BOT_USERNAME }}
                   committer_email: ${{ vars.LABORTEM_BOT_EMAIL }}
-                  message: "[ACTIONS] Pretty on push dev"
+                  message: "[ACTIONS] Pretty on push dev [skip ci]"
                   commit: --signoff
+
+
+
+                  
