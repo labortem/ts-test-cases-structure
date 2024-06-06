@@ -31,12 +31,16 @@ jobs:
                   npm run pretty
 
             - name: Commit changes
-              run: |
-                  git config --local user.email ${{ vars.ACTIONS_COMMIT_USER_EMAIL }}
-                  git config --local user.name ${{ vars.ACTIONS_COMMIT_USER_NAME }}
-                  git add -A
-                  git commit -m "[ACTIONS] Pretty repo on push dev"
+              uses: EndBug/add-and-commit@v9.1.4
+              with:
+                  default_author: github_actor
+                  committer_name: ${{ vars.ACTIONS_COMMIT_USER_NAME }}
+                  committer_email: ${{ vars.ACTIONS_COMMIT_USER_EMAIL }}
+                  message: "[ACTIONS] Pretty repo on push dev"
+                  commit: --signoff
 
-            - name: Push changes
-              run: |
-                  git push origin dev
+
+
+
+
+                  
