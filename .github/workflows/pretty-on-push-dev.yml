@@ -40,7 +40,7 @@ jobs:
               run: |
                   rm -rf /tmp/gpg.sh
                   echo '#!/bin/bash' >> /tmp/gpg.sh
-                  echo 'gpg --batch --pinentry-mode=loopback --passphrase ${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }} $@' >> /tmp/gpg.sh
+                  echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}" $@' >> /tmp/gpg.sh
                   chmod +x /tmp/gpg.sh
 
             - name: Configure Git for signing
