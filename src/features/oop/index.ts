@@ -8,3 +8,6 @@ export { TestCaseOfClassStaticGetter } from "./TestCaseOfClassStaticGetter";
 export { TestCaseOfClassStaticMethod } from "./TestCaseOfClassStaticMethod";
 export { TestCaseOfClassStaticSetter } from "./TestCaseOfClassStaticSetter";
 export { TestCaseOfClassStaticSetterGetter } from "./TestCaseOfClassStaticSetterGetter";
+
+
+

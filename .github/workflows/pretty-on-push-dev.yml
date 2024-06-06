@@ -26,23 +26,15 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Ignore Github Action workflows
-              run: |
-                  printf "\n.github/workflows" >> .prettierignore
-
             - name: Run pretty script
               run: |
                   npm run pretty
-
-            - name: Cancel edition of .prettierignore
-              run: |
-                  git checkout -- .prettierignore
 
             - name: Commit changes
               run: |
                   git config --local user.email ${{ vars.ACTIONS_COMMIT_USER_EMAIL }}
                   git config --local user.name ${{ vars.ACTIONS_COMMIT_USER_NAME }}
-                  git add *
+                  git add -A
                   git commit -m "[ACTIONS] Pretty repo on push dev"
 
             - name: Push changes
