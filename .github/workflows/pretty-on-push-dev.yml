@@ -43,6 +43,12 @@ jobs:
                   echo 'gpg --batch --pinentry-mode=loopback --passphrase ${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }} $@' >> /tmp/gpg.sh
                   chmod +x /tmp/gpg.sh
 
+            - name: Configure Git for signing
+              run: |
+                  git config commit.gpgsign true
+                  git config user.signingkey ${{ secrets.GPG_LABORTEM_BOT_KEYID }}
+                  git config gpg.program /tmp/gpg.sh
+
             - name: Commit changes
               uses: EndBug/add-and-commit@v9.1.4
               with:
