@@ -46,7 +46,7 @@ jobs:
             - name: Test sign
               run: |
                   git add -A
-                  git commit -m "[ACTIONS] Pretty on push dev"
+                  git commit -S -m "[ACTIONS] Pretty on push dev"
                   git push origin
               env:
                   GPG_PASSPHRASE: ${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}
