@@ -31,9 +31,10 @@ jobs:
                   npm run pretty
 
             - name: Import GPG key
-              run: echo $GPG_KEY | base64 --decode | gpg --batch --import
-              env:
-                  GPG_KEY: ${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}
+              run: |
+                  echo "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}" > private-key.asc
+                  gpg --batch --import private-key.asc
+                  rm private-key.asc
 
             - name: Generate shell script to pass GPG passphrase
               run: |
@@ -48,6 +49,7 @@ jobs:
                   git add test.md
                   git commit -m "test commit"
                   git verify-commit $( git rev-parse HEAD )
+                  git push origin
               env:
                   GPG_PASSPHRASE: ${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}
                   GIT_COMMITTER_NAME: ${{ vars.ACTIONS_COMMIT_USER_NAME }}
