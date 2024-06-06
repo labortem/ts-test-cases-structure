@@ -16,7 +16,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4.1.6
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
 
             - name: Setup Node.js
               uses: actions/setup-node@v4.0.2
@@ -39,9 +39,17 @@ jobs:
                   git checkout -- .prettierignore
 
             - name: Commit changes
-              uses: EndBug/add-and-commit@v9
-              with:
-                  committer_name: github-actions
-                  committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-                  default_author: github_actor
-                  message: "[ACTIONS] Pretty repo on push dev"
+              run: |
+                  git config --local user.email ${{ vars.ACTIONS_COMMIT_USER_EMAIL }}
+                  git config --local user.name ${{ vars.ACTIONS_COMMIT_USER_NAME }}
+                  git add *
+                  git commit -m "[ACTIONS] Pretty repo on push dev"
+
+            - name: Push changes
+              run: |
+                  git push origin dev
+
+
+
+
+                  
