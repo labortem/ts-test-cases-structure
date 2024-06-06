@@ -38,9 +38,3 @@ jobs:
                   committer_email: ${{ vars.ACTIONS_COMMIT_USER_EMAIL }}
                   message: "[ACTIONS] Pretty repo on push dev"
                   commit: --signoff
-
-
-
-
-
-                  
