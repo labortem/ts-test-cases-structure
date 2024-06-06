@@ -58,7 +58,3 @@ jobs:
                   committer_email: ${{ vars.LABORTEM_BOT_EMAIL }}
                   message: "[ACTIONS] Pretty on push dev [skip ci]"
                   commit: --signoff
-
-
-
-                  
