@@ -1,0 +1,70 @@
+name: Publish on release
+
+on:
+    release:
+        types: published
+
+jobs:
+    publish:
+        name: Publish
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check release from `master` branch
+              run: |
+                  if [[ "${{ github.event.release.tag_name }}" != master* ]]; then
+                    echo "Release not created from master. Workflow is aborted."
+                    exit 1 - Skipping for test
+                  fi
+
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+              with:
+                  path: checkout
+
+            - name: Checking existence of the version on the registry
+              run: |
+                  name=$(npm pkg get name | xargs)
+                  version=$(npm pkg get version | xargs)
+
+                  package="${name}@${version}"
+
+                  {
+                    versions=$(npm show $name versions)
+                  } || {
+                    exit 0
+                  }
+
+                  if echo "$versions" | grep -q "'$version'"; then
+                    registry=$(npm config get registry)
+
+                    echo "::error title=Version already existing::{$package does already exist on registry '$registry'"
+                    exit 1
+                  fi
+
+            - name: Download latest release
+              uses: robinraju/release-downloader@v1.10
+              with:
+                  latest: true
+                  fileName: "*.tgz"
+                  out-file-path: release
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4.0.2
+              with:
+                  node-version: "20.13.1"
+
+            - name: Unpack latest release
+              run: |
+                  gunzip -c release/*.tgz | tar xvf - -C release
+
+            - name: Copy NPM config to release folder
+              run: |
+                  cp checkout/.npmrc release/package
+
+            - name: Publish to GitHub Node.js package registry
+              run: |
+                  cd release/package
+                  npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPMJS_LABORTEM_BOT_AUTOMATION }}

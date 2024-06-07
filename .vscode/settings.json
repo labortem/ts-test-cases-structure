@@ -1,5 +1,5 @@
 {
-	"typescript.preferences.importModuleSpecifier": "relative",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
 	"material-icon-theme.files.associations": {
 		"index.ts": "tsconfig"
@@ -10,8 +10,8 @@
 		"node_modules/**"
 	],
 	"files.exclude": {
+		"build": true,
 		"node_modules": true,
-		"package-lock.json": true,
 		".history": true
 	}
 }

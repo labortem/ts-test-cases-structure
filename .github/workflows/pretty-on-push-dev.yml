@@ -1,0 +1,60 @@
+name: Pretty on push dev
+
+on:
+    push:
+        branches:
+            - dev
+
+permissions:
+    contents: write
+
+jobs:
+    pretty:
+        name: Pretty
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+              with:
+                  token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4.0.2
+              with:
+                  node-version: "20.13.1"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run pretty script
+              run: |
+                  npm run pretty
+
+            - name: Import GPG key
+              run: |
+                  echo "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}" > private-key.asc
+                  gpg --batch --import private-key.asc
+                  rm private-key.asc
+
+            - name: Generate shell script to pass GPG passphrase
+              run: |
+                  rm -rf /tmp/gpg.sh
+                  echo '#!/bin/bash' >> /tmp/gpg.sh
+                  echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}" $@' >> /tmp/gpg.sh
+                  chmod +x /tmp/gpg.sh
+
+            - name: Configure Git for signing
+              run: |
+                  git config commit.gpgsign true
+                  git config user.signingkey ${{ secrets.GPG_LABORTEM_BOT_KEYID }}
+                  git config gpg.program /tmp/gpg.sh
+
+            - name: Commit changes
+              uses: EndBug/add-and-commit@v9.1.4
+              with:
+                  author_name: ${{ vars.LABORTEM_BOT_USERNAME }}
+                  author_email: ${{ vars.LABORTEM_BOT_EMAIL }}
+                  committer_name: ${{ vars.LABORTEM_BOT_USERNAME }}
+                  committer_email: ${{ vars.LABORTEM_BOT_EMAIL }}
+                  message: "[ACTIONS] Pretty on push dev [skip ci]"
+                  commit: --signoff

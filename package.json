@@ -1,17 +1,29 @@
 {
-	"name": "ts_test_cases_structure",
+	"name": "@labortem/ts-test-cases-structure",
 	"displayName": "TS test cases structure",
 	"description": "TypeScript type structure for test cases",
+	"version": "1.0.0",
 	"author": {
 		"name": "Labortem",
 		"url": "https://github.com/labortem"
 	},
+	"types": "build/types/main.d.ts",
+	"files": [
+		"build"
+	],
 	"scripts": {
 		"pretty": "prettier --write .",
-		"refresh-node-modules": "rm -rf node_modules && npm install"
+		"build": "webpack --config config/webpack/webpack.prod.ts --progress"
 	},
 	"devDependencies": {
+		"@types/node": "^20.12.11",
+		"@types/webpack": "^5.28.5",
+		"npm-run-all": "^4.1.5",
 		"prettier": "^3.2.5",
-		"prettier-plugin-multiline-arrays": "^3.0.4"
+		"prettier-plugin-multiline-arrays": "^3.0.4",
+		"ts-loader": "^9.5.1",
+		"ts-node": "^10.9.2",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
 	}
 }
