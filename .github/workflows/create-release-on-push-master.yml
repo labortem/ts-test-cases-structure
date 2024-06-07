@@ -19,7 +19,6 @@ jobs:
 
             - name: Check
               run: |
-                  exit 1
                   name=$(npm pkg get name | xargs)
                   version=$(npm pkg get version | xargs)
 
@@ -118,11 +117,30 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4.1.6
 
+            - name: Import GPG key
+              run: |
+                  echo "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}" > private-key.asc
+                  gpg --batch --import private-key.asc
+                  rm private-key.asc
+
+            - name: Generate shell script to pass GPG passphrase
+              run: |
+                  rm -rf /tmp/gpg.sh
+                  echo '#!/bin/bash' >> /tmp/gpg.sh
+                  echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}" $@' >> /tmp/gpg.sh
+                  chmod +x /tmp/gpg.sh
+
+            - name: Configure Git for signing
+              run: |
+                  git config commit.gpgsign true
+                  git config user.signingkey ${{ secrets.GPG_LABORTEM_BOT_KEYID }}
+                  git config gpg.program /tmp/gpg.sh
+
             - name: Revert merge on master
               id: revert_merge
               run: |
-                  git config --global user.name github-actions
-                  git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+                  git config user.name ${{ vars.LABORTEM_BOT_USERNAME }}
+                  git config user.email ${{ vars.LABORTEM_BOT_EMAIL }}
 
                   git revert ${{ github.sha }}
                   git push origin master
@@ -145,16 +163,16 @@ jobs:
             - name: Open hotfix issue
               uses: GuillaumeFalourd/open-issue-action@v1
               with:
-                  access-token: ${{ secrets.GITHUB_TOKEN }}
+                  access-token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
                   repo-owner: ${{ github.repository_owner }}
                   repo-name: ${{ github.event.repository.name }}
                   issue-title: "[ACTIONS] Master merge reverted due to existing version on registry"
                   issue-body: |
-                      :x: This issue was automatically created by Github Action (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
+                      :x: This issue was automatically created by @${{ vars.LABORTEM_BOT_USERNAME }} (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
 
                       The package '${{ steps.get_package_data.outputs.package_name }}@${{ steps.get_package_data.outputs.package_version }}' does already exist on the registry '${{ steps.get_package_data.outputs.registry }}'.
                       To prevent deployment issues, the merge on the master branch (${{github.sha}}) has been reverted as ${{steps.revert_merge.outputs.revert-sha}}.
 
-                      Please update the package version and merge again.
+                      Please update the package version and open a new pull request to the master branch.
                   issue-labels: Hotfix,Actions
                   issue-assignees: ${{ github.actor }}
