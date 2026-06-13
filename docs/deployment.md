@@ -107,14 +107,14 @@ marker on the automated formatting commit.
 | --- | --- |
 | `LABORTEM_BOT_PAT` | Bot-authenticated checkouts, release creation, issues, revert push |
 | `LABORTEM_BOT_SIGNING_PRIVATE_KEY` | SSH private key used to sign the bot's commits (passphrase-less) |
+| `LABORTEM_BOT_GIT_COMMIT_USERNAME` | git author/committer name for bot commits |
+| `LABORTEM_BOT_GIT_COMMIT_EMAIL` | git author/committer email for bot commits |
 | `NPMJS_LABORTEM_BOT_AUTOMATION` | Publishing to npmjs (referenced by `token_secret` in `REGISTRIES`) |
 
 ### Repository variables
 
 | Variable | Used for |
 | --- | --- |
-| `LABORTEM_BOT_USERNAME` | git author/committer name for bot commits |
-| `LABORTEM_BOT_EMAIL` | git author/committer email for bot commits |
 | `REGISTRIES` | JSON array of `{ registry, token_secret }` shared by the version-check and publish matrices |
 
 ### Ruleset bypass

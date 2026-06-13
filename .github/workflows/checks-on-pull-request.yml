@@ -44,10 +44,10 @@ jobs:
             - name: Commit changes
               uses: EndBug/add-and-commit@v9.1.4
               with:
-                  author_name: ${{ vars.LABORTEM_BOT_USERNAME }}
-                  author_email: ${{ vars.LABORTEM_BOT_EMAIL }}
-                  committer_name: ${{ vars.LABORTEM_BOT_USERNAME }}
-                  committer_email: ${{ vars.LABORTEM_BOT_EMAIL }}
+                  author_name: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}
+                  author_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
+                  committer_name: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}
+                  committer_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
                   message: "[ACTIONS] Pretty [skip ci]"
                   commit: --signoff
 

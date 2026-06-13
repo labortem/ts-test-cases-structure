@@ -109,8 +109,8 @@ jobs:
             - name: Revert the release commit
               id: revert
               run: |
-                  git config user.name ${{ vars.LABORTEM_BOT_USERNAME }}
-                  git config user.email ${{ vars.LABORTEM_BOT_EMAIL }}
+                  git config user.name "${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}"
+                  git config user.email "${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}"
 
                   git revert --no-edit ${{ github.sha }}
                   git push origin master
@@ -125,7 +125,7 @@ jobs:
                   repo-name: ${{ github.event.repository.name }}
                   issue-title: "[ACTIONS] Release reverted due to a failed validation"
                   issue-body: |
-                      :x: This issue was automatically created by @${{ vars.LABORTEM_BOT_USERNAME }} (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
+                      :x: This issue was automatically created by @${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }} (run [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})).
 
                       The release '${{ github.event.release.tag_name }}' failed validation: its tag and name must match the package version.
                       The release commit (${{ github.sha }}) has been reverted as ${{ steps.revert.outputs.revert-sha }}.
