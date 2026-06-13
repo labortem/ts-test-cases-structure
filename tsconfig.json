@@ -1,11 +1,15 @@
 {
 	"compilerOptions": {
+		"types": [
+			"node"
+		],
+
 		"alwaysStrict": true,
 
 		"target": "ESNext",
 		"module": "CommonJS",
 
-		"baseUrl": "src",
+		"noEmit": true,
 
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
@@ -16,10 +20,11 @@
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
+		"strictBuiltinIteratorReturn": true,
 
 		"paths": {
-			"@ts-test-cases-structure": [
-				"./main"
+			"@src/*": [
+				"./src/*"
 			]
 		}
 	},

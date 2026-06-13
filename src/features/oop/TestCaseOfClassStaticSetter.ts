@@ -1,9 +1,9 @@
-import { Setter, TestCaseExtras } from "utils/signatures";
+import { Setter, TestCaseExtras } from "@src/utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "utils/utils";
+} from "@src/utils/utils";
 import { TestCaseOfClassStaticGetter, TestCaseOfClassStaticSetterGetter } from ".";
 
 /**

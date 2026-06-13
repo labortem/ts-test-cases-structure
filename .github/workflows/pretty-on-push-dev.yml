@@ -18,17 +18,14 @@ jobs:
               with:
                   token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4.0.2
-              with:
-                  node-version: "20.13.1"
+            - name: Setup mise
+              uses: jdx/mise-action@v2
 
             - name: Install dependencies
               run: npm ci
 
-            - name: Run pretty script
-              run: |
-                  npm run pretty
+            - name: Run pretty task
+              run: mise run pretty
 
             - name: Import GPG key
               run: |

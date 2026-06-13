@@ -1,10 +1,10 @@
-import { IsClassGetterLike } from "utils/structure/isLike";
-import { Class, Getter, Setter, TestCaseExtras } from "utils/signatures";
+import { IsClassGetterLike } from "@src/utils/structure/isLike";
+import { Class, Getter, Setter, TestCaseExtras } from "@src/utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "utils/utils";
+} from "@src/utils/utils";
 import { TestCaseOfClassGetter, TestCaseOfClassSetter } from ".";
 
 /**

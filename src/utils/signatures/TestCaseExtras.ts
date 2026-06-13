@@ -1,4 +1,4 @@
-import { ExpectedThrowKey } from "utils/utils";
+import { ExpectedThrowKey } from "@src/utils/utils";
 
 /**
  * Type for extra data that can be passed to a test case.

@@ -1,5 +1,5 @@
-import { HasClassStaticMethodParameters, HasClassStaticMethodReturn } from "utils/structure/has";
-import { Method } from "utils/signatures";
+import { HasClassStaticMethodParameters, HasClassStaticMethodReturn } from "@src/utils/structure/has";
+import { Method } from "@src/utils/signatures";
 
 /**
  * Check if the given class static method matches the expected structure.

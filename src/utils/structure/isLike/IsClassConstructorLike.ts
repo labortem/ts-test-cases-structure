@@ -1,5 +1,5 @@
-import { HasClassConstructorParameters } from "utils/structure/has";
-import { Class } from "utils/signatures";
+import { HasClassConstructorParameters } from "@src/utils/structure/has";
+import { Class } from "@src/utils/signatures";
 
 /**
  * Check if the given class constructor matches the expected structure.

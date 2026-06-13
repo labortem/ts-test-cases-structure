@@ -1,4 +1,4 @@
-import { Class } from "utils/signatures";
+import { Class } from "@src/utils/signatures";
 
 /**
  * Check if the given class does have constructor parameters.

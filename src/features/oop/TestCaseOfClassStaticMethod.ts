@@ -1,10 +1,10 @@
-import { IsClassStaticMethodLike } from "utils/structure/isLike";
-import { Method, TestCaseExtras } from "utils/signatures";
+import { IsClassStaticMethodLike } from "@src/utils/structure/isLike";
+import { Method, TestCaseExtras } from "@src/utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "utils/utils";
+} from "@src/utils/utils";
 
 /**
  * Test case structure of a class static method.

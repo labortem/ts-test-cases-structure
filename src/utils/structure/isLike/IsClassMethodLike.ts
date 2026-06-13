@@ -1,5 +1,9 @@
-import { HasClassConstructorParameters, HasClassMethodParameters, HasClassMethodReturn } from "utils/structure/has";
-import { Class, Method } from "utils/signatures";
+import {
+	HasClassConstructorParameters,
+	HasClassMethodParameters,
+	HasClassMethodReturn,
+} from "@src/utils/structure/has";
+import { Class, Method } from "@src/utils/signatures";
 
 /**
  * Check if the given class method matches the expected structure.
