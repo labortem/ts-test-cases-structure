@@ -1,9 +1,1 @@
-export {
-	TestCaseOfClassConstructor,
-	TestCaseOfClassGetter,
-	TestCaseOfClassMethod,
-	TestCaseOfStaticClassGetter,
-	TestCaseOfStaticClassMethod,
-} from "./TestCaseOf";
-
-export { instanceOf } from "./instanceOf";
+export * as oop from "./oop";

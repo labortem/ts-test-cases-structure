@@ -1,17 +1,25 @@
 {
-	"name": "ts_test_cases_structure",
+	"name": "@labortem/ts-test-cases-structure",
 	"displayName": "TS test cases structure",
 	"description": "TypeScript type structure for test cases",
+	"version": "1.0.0",
 	"author": {
 		"name": "Labortem",
 		"url": "https://github.com/labortem"
 	},
-	"scripts": {
-		"pretty": "prettier --write .",
-		"refresh-node-modules": "rm -rf node_modules && npm install"
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/labortem/ts-test-cases-structure.git"
 	},
+	"types": "build/types/main.d.ts",
+	"files": [
+		"build"
+	],
 	"devDependencies": {
+		"@types/node": "^24.13.2",
 		"prettier": "^3.2.5",
-		"prettier-plugin-multiline-arrays": "^3.0.4"
+		"prettier-plugin-multiline-arrays": "^3.0.4",
+		"tsc-alias": "^1.8.17",
+		"typescript": "^6.0.3"
 	}
 }

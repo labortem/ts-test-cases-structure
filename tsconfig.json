@@ -1,11 +1,15 @@
 {
 	"compilerOptions": {
+		"types": [
+			"node"
+		],
+
 		"alwaysStrict": true,
 
 		"target": "ESNext",
 		"module": "CommonJS",
 
-		"baseUrl": "src",
+		"noEmit": true,
 
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
@@ -15,9 +19,17 @@
 		"strictBindCallApply": true,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
-		"strictPropertyInitialization": true
+		"strictPropertyInitialization": true,
+		"strictBuiltinIteratorReturn": true,
+
+		"paths": {
+			"@src/*": [
+				"./src/*"
+			]
+		}
 	},
 	"exclude": [
-		"node_modules"
+		"node_modules",
+		"build"
 	]
 }

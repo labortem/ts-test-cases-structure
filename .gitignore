@@ -1,12 +1,19 @@
+# Build
+/build
+
 # Sandbox
-sandbox
+/sandbox
 
 # Node.js
-node_modules
-package-lock.json
+/node_modules
 
 # System files
 .DS_Store
 
 # VScode extensions
-.history
+/.history
+
+# Build files
+/labortem-ts-test-cases-structure-*.tgz
+/package
+/package *

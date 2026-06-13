@@ -1,17 +1,23 @@
 {
-	"typescript.preferences.importModuleSpecifier": "relative",
-	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
+	"js/ts.preferences.importModuleSpecifier": "non-relative",
+	"js/ts.tsserver.experimental.enableProjectDiagnostics": true,
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"*.ts": "${capture}.test.ts"
+	},
 	"material-icon-theme.files.associations": {
 		"index.ts": "tsconfig"
 	},
 	"local-history.exclude": [
 		".history/**",
-		".vscode/**",
-		"node_modules/**"
+		"node_modules/**",
+		"build/**"
 	],
 	"files.exclude": {
+		"build": false,
 		"node_modules": true,
-		"package-lock.json": true,
-		".history": true
+		".history": true,
+		"package-lock.json": true
 	}
 }

@@ -1,10 +1,10 @@
-import { IsClassMethodLike } from "../../utils/structure/isLike";
-import { Class, Method, TestCaseExtras } from "../../utils/signatures";
+import { IsClassMethodLike } from "@src/utils/structure/isLike";
+import { Class, Method, TestCaseExtras } from "@src/utils/signatures";
 import {
 	CanTestCaseThrow,
 	IsTestCaseExtrasEmptyWithoutExpectedThrow,
 	RemoveExpectedThrowFromTestCaseExtras,
-} from "../../utils/utils";
+} from "@src/utils/utils";
 
 /**
  * Test case structure of a class method.

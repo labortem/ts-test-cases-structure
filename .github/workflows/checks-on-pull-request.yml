@@ -1,0 +1,68 @@
+name: Checks on pull request
+
+on:
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
+
+permissions:
+    contents: write
+
+jobs:
+    pretty:
+        name: Pretty
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+              with:
+                  ref: ${{ github.head_ref }}
+                  token: ${{ secrets.LABORTEM_BOT_PAT }}
+
+            - name: Setup mise
+              uses: jdx/mise-action@v2
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run pretty task
+              run: mise run pretty
+
+            - name: Configure the bot SSH signing key
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.LABORTEM_BOT_SIGNING_PRIVATE_KEY }}" > ~/.ssh/bot_signing_key
+                  chmod 600 ~/.ssh/bot_signing_key
+                  ssh-keygen -y -f ~/.ssh/bot_signing_key > ~/.ssh/bot_signing_key.pub
+
+                  git config gpg.format ssh
+                  git config user.signingkey ~/.ssh/bot_signing_key.pub
+                  git config commit.gpgsign true
+
+            - name: Commit changes
+              uses: EndBug/add-and-commit@v9.1.4
+              with:
+                  author_name: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}
+                  author_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
+                  committer_name: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}
+                  committer_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
+                  message: "[ACTIONS] Pretty"
+                  commit: --signoff
+
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Setup mise
+              uses: jdx/mise-action@v2
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run test task
+              run: mise run test

@@ -1,0 +1,76 @@
+name: Create release on push master
+
+on:
+    push:
+        branches:
+            - master
+
+permissions:
+    contents: write
+
+jobs:
+    create-release:
+        name: Create release
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+              with:
+                  token: ${{ secrets.LABORTEM_BOT_PAT }}
+
+            - name: Setup mise
+              uses: jdx/mise-action@v2
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Read package version
+              id: meta
+              run: echo "version=$(npm pkg get version | xargs)" >> $GITHUB_OUTPUT
+
+            - name: Pack production build
+              id: pack
+              run: |
+                  mise run build
+                  npm_pack_output=$(npm pack --json)
+                  echo "npm_pack_output<<EOF" >> $GITHUB_OUTPUT
+                  echo "$npm_pack_output" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Get pack file name
+              id: package_file_name
+              run: |
+                  echo "${{ steps.pack.outputs.npm_pack_output }}" | grep "filename" | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | awk '{print "package_file_name=" $0}' >> $GITHUB_OUTPUT
+
+            - name: Create release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.LABORTEM_BOT_PAT }}
+              with:
+                  tag_name: ${{ steps.meta.outputs.version }}
+                  release_name: ${{ steps.meta.outputs.version }}
+                  body: |
+                      <!--- RELEASE DRAFT FOR ${{ steps.meta.outputs.version }}
+
+                      Checklist:
+                      - The release tag and name match the package version,
+                      - The asset ZIP file contains all and only the files that the package needs,
+                      - The changelog is filled.
+
+                      -->
+
+                      # CHANGELOG - ${{ steps.meta.outputs.version }} (${{ github.sha }})
+
+                      - ...
+                  draft: true
+                  prerelease: false
+
+            - name: Add assets to release
+              uses: dwenegar/upload-release-assets@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.LABORTEM_BOT_PAT }}
+              with:
+                  release_id: ${{ steps.create_release.outputs.id }}
+                  assets_path: ${{ steps.package_file_name.outputs.package_file_name }}

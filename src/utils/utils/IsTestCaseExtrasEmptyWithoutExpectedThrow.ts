@@ -1,5 +1,5 @@
-import { TestCaseExtras } from "../signatures";
-import { RemoveExpectedThrowFromTestCaseExtras } from ".";
+import { TestCaseExtras } from "@src/utils/signatures";
+import { RemoveExpectedThrowFromTestCaseExtras } from "@src/utils/utils";
 
 /**
  * Check if the {@link TestCaseExtras | `TestCaseExtras`} object is empty without the expected throw key.
