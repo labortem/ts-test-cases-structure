@@ -22,7 +22,7 @@ Every automated write (commits, releases, issues) is performed by the organizati
 -   direct pushes are forbidden — changes land only through a pull request,
 -   force pushes (`non_fast_forward`) and branch deletion are forbidden,
 -   these status checks must pass before merging:
-    -   `Check version availability (https://registry.npmjs.org)`
+    -   `Version gate` (a fixed-name job that aggregates every registry leg of the version check)
     -   `Test`
 
 The bot bypasses the ruleset (via the `Bots` team) only so the automated revert can push to `master`; see
@@ -80,8 +80,9 @@ targeted — GitHub Packages, authenticated with the bot PAT:
 ```
 
 Adding another registry is one entry in `DEPLOYMENT_REGISTRIES` (a `registry` URL and its `token_secret` — the **name** of the auth
-secret, never its value, since the matrix is evaluated before the `secrets` context is available). The new registry then
-also appears as its own required status check on the `master` ruleset.
+secret, never its value, since the matrix is evaluated before the `secrets` context is available). The `master` ruleset
+requires the fixed-name `Version gate` job (which aggregates all registry legs), so adding a registry needs **no** ruleset
+change.
 
 ## The bot account
 

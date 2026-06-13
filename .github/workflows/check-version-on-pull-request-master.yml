@@ -44,3 +44,18 @@ jobs:
                   fi
 
                   echo "$package is available on '$registry'."
+
+    gate:
+        name: Version gate
+        runs-on: ubuntu-latest
+
+        needs: check-version
+        if: always()
+
+        steps:
+            - name: Ensure all version checks passed
+              run: |
+                  if [ "${{ needs.check-version.result }}" != "success" ]; then
+                    echo "::error title=Version gate::One or more version availability checks did not pass."
+                    exit 1
+                  fi
