@@ -22,7 +22,7 @@ Every automated write (commits, releases, issues) is performed by the organizati
 -   direct pushes are forbidden — changes land only through a pull request,
 -   force pushes (`non_fast_forward`) and branch deletion are forbidden,
 -   these status checks must pass before merging:
-    -   `Version gate` (a fixed-name job that aggregates every registry leg of the version check)
+    -   `Version gate` (a fixed-name job validating the `a.b.c` version, the PR title, and every registry availability leg)
     -   `Test`
 
 The bot bypasses the ruleset (via the `Bots` team) only so the automated revert can push to `master`; see
@@ -40,23 +40,26 @@ independent jobs:
 
 On pull requests **targeting `master`**, an extra check runs:
 [`check-version-on-pull-request-master.yml`](../.github/workflows/check-version-on-pull-request-master.yml). For each
-targeted registry it verifies the version in `package.json` is **not already published**, and fails otherwise. This
-blocks a version clash _before_ the merge instead of reverting it afterwards.
+targeted registry it verifies the version in `package.json` is **not already published**; the aggregating `Version gate`
+job additionally enforces that the version is in `a.b.c` form and that the **pull request title equals that version**.
+This blocks a version clash or a malformed version _before_ the merge instead of reverting it afterwards.
 
 ## Releasing a new version
 
 1. **Bump the version** in `package.json` on your branch (semantic versioning).
-2. Open a **pull request to `master`**. The version-availability check confirms the version is free; `Pretty` and `Test`
-   must be green.
+2. Open a **pull request to `master`** whose **title is the version** (`a.b.c`). `Version gate` (version format, PR title,
+   registry availability) and `Test` must be green.
 3. **Merge** the pull request. The push to `master` triggers
    [`create-release-on-push-master.yml`](../.github/workflows/create-release-on-push-master.yml), which:
     - builds the type declarations (`mise run build`) and packs the tarball (`npm pack`),
     - creates a **draft** GitHub release whose **tag and name are the package version**, with the `.tgz` attached as an
       asset.
-4. **Review the draft release** (the body contains a checklist: tag/name match the version, the asset contains the right
-   files, the changelog is filled), edit the changelog, then **publish** it.
+   The release body is the **merge commit message**, injected automatically, preceded by an invisible reviewer note.
+4. **Review the draft release** — check the injected notes and that the asset contains the right files (the tag, name and
+   `a.b.c` version are validated automatically), then **publish** it.
 5. Publishing triggers [`publish-on-release.yml`](../.github/workflows/publish-on-release.yml):
-    - **validate** — the release tag and name must both equal the package version, otherwise the release is rejected,
+    - **validate** — the version must be `a.b.c` and the release tag and name must both equal it, otherwise the release is
+      rejected,
     - **publish** — for each registry: publishes the release tarball if the version is missing there; **skips** if the
       version already exists with a matching integrity; **fails** if it exists with a different integrity (a registry
       desync),

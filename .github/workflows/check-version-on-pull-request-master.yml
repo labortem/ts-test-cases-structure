@@ -53,9 +53,27 @@ jobs:
         if: always()
 
         steps:
-            - name: Ensure all version checks passed
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Validate version naming and availability
+              env:
+                  PR_TITLE: ${{ github.event.pull_request.title }}
               run: |
-                  if [ "${{ needs.check-version.result }}" != "success" ]; then
-                    echo "::error title=Version gate::One or more version availability checks did not pass."
-                    exit 1
+                  status=0
+                  version=$(npm pkg get version | xargs)
+
+                  if ! printf '%s' "$version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+                    echo "::error title=Invalid version::package.json version '$version' is not in a.b.c format."
+                    status=1
                   fi
+                  if [ "$PR_TITLE" != "$version" ]; then
+                    echo "::error title=Invalid PR title::The pull request title '$PR_TITLE' must equal the package version '$version' (a.b.c)."
+                    status=1
+                  fi
+                  if [ "${{ needs.check-version.result }}" != "success" ]; then
+                    echo "::error title=Version availability::One or more registry availability checks did not pass."
+                    status=1
+                  fi
+
+                  exit $status

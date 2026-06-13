@@ -32,6 +32,10 @@ jobs:
                   name="${{ github.event.release.name }}"
 
                   status=0
+                  if ! printf '%s' "$version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+                    echo "::error title=Invalid version::Version '$version' is not in a.b.c format."
+                    status=1
+                  fi
                   if [ "$tag" != "$version" ]; then
                     echo "::error title=Tag mismatch::Release tag '$tag' does not match the package version '$version'."
                     status=1
