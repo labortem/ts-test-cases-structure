@@ -1,4 +1,9 @@
 {
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"*.ts": "${capture}.test.ts"
+	},
 	"typescript.preferences.importModuleSpecifier": "non-relative",
 	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
 	"material-icon-theme.files.associations": {
