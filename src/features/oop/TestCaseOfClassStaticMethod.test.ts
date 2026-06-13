@@ -24,14 +24,9 @@ const all = S.all;
 
 // --- Base structure -----------------------------------------------------------------------------------------------
 
-// BUG: a `void`-returning static method should yield `[]`, but `HasClassStaticMethodReturn` compares
-// `ReturnType` to `[]` instead of `void` (unlike the instance-method predicate `HasClassMethodReturn`), so the
-// empty return segment `[void]` is wrongly kept. This locks the CURRENT (buggy) output — change the expected type
-// to `[]` once `src/utils/structure/has/HasClassStaticMethodReturn.ts` is fixed.
-type _none = Expect<Equal<TestCaseOfClassStaticMethod<typeof none>, [void]>>;
+type _none = Expect<Equal<TestCaseOfClassStaticMethod<typeof none>, []>>;
 type _ret = Expect<Equal<TestCaseOfClassStaticMethod<typeof ret>, [bigint]>>;
-// BUG: same root cause as `_none` — the expected type should be `[[string, boolean]]` (no return segment).
-type _params = Expect<Equal<TestCaseOfClassStaticMethod<typeof params>, [[string, boolean], void]>>;
+type _params = Expect<Equal<TestCaseOfClassStaticMethod<typeof params>, [[string, boolean]]>>;
 type _all = Expect<Equal<TestCaseOfClassStaticMethod<typeof all>, [[string, boolean], bigint]>>;
 
 // --- Extra object (no `expectedThrow`) ----------------------------------------------------------------------------
