@@ -57,8 +57,24 @@ blocks a version clash _before_ the merge instead of reverting it afterwards.
    files, the changelog is filled), edit the changelog, then **publish** it.
 5. Publishing triggers [`publish-on-release.yml`](../.github/workflows/publish-on-release.yml):
     - **validate** — the release tag and name must both equal the package version, otherwise the release is rejected,
-    - **publish** — for each registry, re-checks availability and runs `npm publish` on the tarball,
-    - **revert** (on validation failure) — reverts the release commit on `master` and opens a hotfix issue.
+    - **publish** — for each registry: publishes the release tarball if the version is missing there; **skips** if the
+      version already exists with a matching integrity; **fails** if it exists with a different integrity (a registry
+      desync),
+    - **revert** (only on the `release` event, on validation failure) — reverts the release commit on `master` and opens
+      a hotfix issue.
+
+### Re-publishing an existing version to a new registry
+
+`publish-on-release.yml` also has a `workflow_dispatch` trigger taking a `tag` input, so an already-released version can
+be pushed to a registry that was added later — **without any code change or version bump**:
+
+1. add the new registry (and its `token_secret`) to `DEPLOYMENT_REGISTRIES`, and create that secret,
+2. run the workflow manually with `tag` set to the release tag (e.g. `1.0.0`).
+
+It checks out the tag, re-downloads that release's tarball, and applies the same per-registry logic: registries that
+already have the version (with matching integrity) are skipped, the new one is published. Because the published artifact
+is always the release's attached tarball — never a rebuild — every registry receives identical bytes, and the integrity
+check catches any divergence instead of compounding it.
 
 ## Workflows reference
 
