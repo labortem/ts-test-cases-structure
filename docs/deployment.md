@@ -80,10 +80,10 @@ targeted — GitHub Packages, authenticated with the bot PAT:
 	{ "registry": "https://npm.pkg.github.com", "token_secret": "LABORTEM_BOT_PAT" }]
 ```
 
-Adding another registry is one entry in `DEPLOYMENT_REGISTRIES` (a `registry` URL and its `token_secret` — the **name** of the auth
-secret, never its value, since the matrix is evaluated before the `secrets` context is available). The `master` ruleset
-requires the fixed-name `Version gate` job (which aggregates all registry legs), so adding a registry needs **no** ruleset
-change.
+Adding another registry is one entry in `DEPLOYMENT_REGISTRIES` (a `registry` URL and its `token_secret` — the **name**
+of the auth secret, never its value, since the matrix is evaluated before the `secrets` context is available). The
+`master` ruleset requires the fixed-name `Version gate` job (which aggregates all registry legs), so adding a registry
+needs **no** ruleset change.
 
 ## The bot account
 
@@ -112,8 +112,8 @@ would skip every workflow for that commit and leave the required checks stuck on
 
 ### Repository variables
 
-| Variable     | Used for                                                                                    |
-| ------------ | ------------------------------------------------------------------------------------------- |
+| Variable                | Used for                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
 | `DEPLOYMENT_REGISTRIES` | JSON array of `{ registry, token_secret }` shared by the version-check and publish matrices |
 
 ### Ruleset bypass
