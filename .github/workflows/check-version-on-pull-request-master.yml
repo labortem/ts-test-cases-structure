@@ -1,0 +1,38 @@
+name: Check version on pull request to master
+
+on:
+    pull_request:
+        branches:
+            - master
+
+permissions:
+    contents: read
+
+jobs:
+    check-version:
+        name: Check version availability
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                registry:
+                    - https://registry.npmjs.org
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Check the package version is not already published
+              run: |
+                  name=$(npm pkg get name | xargs)
+                  version=$(npm pkg get version | xargs)
+                  package="${name}@${version}"
+                  registry="${{ matrix.registry }}"
+
+                  if npm view "$package" version --registry "$registry" > /dev/null 2>&1; then
+                    echo "::error title=Version already published::$package already exists on '$registry'. Bump the version before merging to master."
+                    exit 1
+                  fi
+
+                  echo "$package is available on '$registry'."
