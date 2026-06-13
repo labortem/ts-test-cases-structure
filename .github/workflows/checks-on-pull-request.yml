@@ -1,9 +1,11 @@
-name: Pretty on push dev
+name: Checks on pull request
 
 on:
-    push:
-        branches:
-            - dev
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
 
 permissions:
     contents: write
@@ -16,6 +18,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4.1.6
               with:
+                  ref: ${{ github.head_ref }}
                   token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
 
             - name: Setup mise
@@ -53,5 +56,21 @@ jobs:
                   author_email: ${{ vars.LABORTEM_BOT_EMAIL }}
                   committer_name: ${{ vars.LABORTEM_BOT_USERNAME }}
                   committer_email: ${{ vars.LABORTEM_BOT_EMAIL }}
-                  message: "[ACTIONS] Pretty on push dev [skip ci]"
+                  message: "[ACTIONS] Pretty [skip ci]"
                   commit: --signoff
+
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4.1.6
+
+            - name: Setup mise
+              uses: jdx/mise-action@v2
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run test task
+              run: mise run test
