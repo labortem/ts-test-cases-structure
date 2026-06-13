@@ -34,7 +34,8 @@ On every pull request, [`checks-on-pull-request.yml`](../.github/workflows/check
 independent jobs:
 
 -   **Pretty** — runs `mise run pretty` (Prettier) and commits any formatting back to the PR branch as the bot
-    (`[ACTIONS] Pretty [skip ci]`). The `[skip ci]` marker avoids an infinite loop.
+    (`[ACTIONS] Pretty`). The commit re-triggers the checks, but Prettier is idempotent, so the next run finds nothing
+    to format and makes no commit — no loop, and `Test` / `Version gate` report on the final commit.
 -   **Test** — runs `mise run test` (the type-level test suite, type-checked with `tsc`).
 
 On pull requests **targeting `master`**, an extra check runs:
@@ -94,8 +95,9 @@ All automation is attributed to **Henri** (`@labortem-bot`), the organization ma
     to appear, the matching public key must be registered on the bot account as a **signing key** (Settings → SSH and
     GPG keys → New SSH key → type _Signing Key_).
 
-Because the bot pushes with a real PAT, its pushes **do** trigger workflows — hence the `[skip ci]` marker on the
-automated formatting commit.
+Because the bot pushes with a real PAT, its pushes **do** trigger workflows. This is intentional: the formatting commit
+must re-run the required checks (`Test`, `Version gate`) so they report on the PR's final commit. A `[skip ci]` marker
+would skip every workflow for that commit and leave the required checks stuck on "Expected".
 
 ## Configuration
 

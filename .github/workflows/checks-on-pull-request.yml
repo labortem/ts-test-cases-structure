@@ -48,7 +48,7 @@ jobs:
                   author_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
                   committer_name: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_USERNAME }}
                   committer_email: ${{ secrets.LABORTEM_BOT_GIT_COMMIT_EMAIL }}
-                  message: "[ACTIONS] Pretty [skip ci]"
+                  message: "[ACTIONS] Pretty"
                   commit: --signoff
 
     test:
