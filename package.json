@@ -7,6 +7,10 @@
 		"name": "Labortem",
 		"url": "https://github.com/labortem"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/labortem/ts-test-cases-structure.git"
+	},
 	"types": "build/types/main.d.ts",
 	"files": [
 		"build"
