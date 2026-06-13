@@ -19,7 +19,7 @@ jobs:
               uses: actions/checkout@v4.1.6
               with:
                   ref: ${{ github.head_ref }}
-                  token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
+                  token: ${{ secrets.LABORTEM_BOT_PAT }}
 
             - name: Setup mise
               uses: jdx/mise-action@v2
@@ -30,24 +30,16 @@ jobs:
             - name: Run pretty task
               run: mise run pretty
 
-            - name: Import GPG key
+            - name: Configure the bot SSH signing key
               run: |
-                  echo "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}" > private-key.asc
-                  gpg --batch --import private-key.asc
-                  rm private-key.asc
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.LABORTEM_BOT_SIGNING_PRIVATE_KEY }}" > ~/.ssh/bot_signing_key
+                  chmod 600 ~/.ssh/bot_signing_key
+                  ssh-keygen -y -f ~/.ssh/bot_signing_key > ~/.ssh/bot_signing_key.pub
 
-            - name: Generate shell script to pass GPG passphrase
-              run: |
-                  rm -rf /tmp/gpg.sh
-                  echo '#!/bin/bash' >> /tmp/gpg.sh
-                  echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}" $@' >> /tmp/gpg.sh
-                  chmod +x /tmp/gpg.sh
-
-            - name: Configure Git for signing
-              run: |
+                  git config gpg.format ssh
+                  git config user.signingkey ~/.ssh/bot_signing_key.pub
                   git config commit.gpgsign true
-                  git config user.signingkey ${{ secrets.GPG_LABORTEM_BOT_KEYID }}
-                  git config gpg.program /tmp/gpg.sh
 
             - name: Commit changes
               uses: EndBug/add-and-commit@v9.1.4

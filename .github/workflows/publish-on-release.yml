@@ -45,9 +45,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                include:
-                    - registry: https://registry.npmjs.org
-                      token_secret: NPMJS_LABORTEM_BOT_AUTOMATION
+                include: ${{ fromJSON(vars.REGISTRIES) }}
 
         steps:
             - name: Checkout code
@@ -95,26 +93,18 @@ jobs:
               with:
                   ref: master
                   fetch-depth: 0
-                  token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
+                  token: ${{ secrets.LABORTEM_BOT_PAT }}
 
-            - name: Import GPG key
+            - name: Configure the bot SSH signing key
               run: |
-                  echo "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_KEY }}" > private-key.asc
-                  gpg --batch --import private-key.asc
-                  rm private-key.asc
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.LABORTEM_BOT_SIGNING_PRIVATE_KEY }}" > ~/.ssh/bot_signing_key
+                  chmod 600 ~/.ssh/bot_signing_key
+                  ssh-keygen -y -f ~/.ssh/bot_signing_key > ~/.ssh/bot_signing_key.pub
 
-            - name: Generate shell script to pass GPG passphrase
-              run: |
-                  rm -rf /tmp/gpg.sh
-                  echo '#!/bin/bash' >> /tmp/gpg.sh
-                  echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE }}" $@' >> /tmp/gpg.sh
-                  chmod +x /tmp/gpg.sh
-
-            - name: Configure Git for signing
-              run: |
+                  git config gpg.format ssh
+                  git config user.signingkey ~/.ssh/bot_signing_key.pub
                   git config commit.gpgsign true
-                  git config user.signingkey ${{ secrets.GPG_LABORTEM_BOT_KEYID }}
-                  git config gpg.program /tmp/gpg.sh
 
             - name: Revert the release commit
               id: revert
@@ -130,7 +120,7 @@ jobs:
             - name: Open hotfix issue
               uses: GuillaumeFalourd/open-issue-action@v1
               with:
-                  access-token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
+                  access-token: ${{ secrets.LABORTEM_BOT_PAT }}
                   repo-owner: ${{ github.repository_owner }}
                   repo-name: ${{ github.event.repository.name }}
                   issue-title: "[ACTIONS] Release reverted due to a failed validation"

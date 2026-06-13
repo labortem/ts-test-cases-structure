@@ -16,8 +16,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                registry:
-                    - https://registry.npmjs.org
+                include: ${{ fromJSON(vars.REGISTRIES) }}
 
         steps:
             - name: Checkout code

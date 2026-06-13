@@ -13,7 +13,7 @@ feature branch ──PR──▶ dev ──PR──▶ master ──push──�
 ```
 
 Every automated write (commits, releases, issues) is performed by the organization bot account
-**Henri** (`@labortem-bot`) and, for git commits, GPG-signed so it shows up as *Verified*.
+**Henri** (`@labortem-bot`) and, for git commits, SSH-signed so they show up as *Verified*.
 
 ## Branch protection (`master`)
 
@@ -72,24 +72,29 @@ fails otherwise. This blocks a version clash *before* the merge instead of rever
 
 ## Registries
 
-The registry list is **matrix-driven** in both the version check and the publish workflow. Today a
-single registry is targeted:
+The registry list lives in a single repository variable, **`REGISTRIES`** (a JSON array), read via
+`fromJSON(vars.REGISTRIES)` by both the version-check and publish matrices. Today a single registry is
+targeted:
 
-| Registry | Auth secret |
-| --- | --- |
-| `https://registry.npmjs.org` | `NPMJS_LABORTEM_BOT_AUTOMATION` |
+```json
+[{ "registry": "https://registry.npmjs.org", "token_secret": "NPMJS_LABORTEM_BOT_AUTOMATION" }]
+```
 
-Adding another registry is one entry in each matrix (a `registry` URL and its `token_secret` name);
-the new registry then also appears as its own required status check on the `master` ruleset.
+Adding another registry is one entry in `REGISTRIES` (a `registry` URL and its `token_secret` — the
+**name** of the auth secret, never its value, since the matrix is evaluated before the `secrets`
+context is available). The new registry then also appears as its own required status check on the
+`master` ruleset.
 
 ## The bot account
 
 All automation is attributed to **Henri** (`@labortem-bot`), the organization machine account:
 
 - API actions (release creation, asset upload, issues, revert push) authenticate with the bot PAT
-  `PAT_GITHUB_LABORTEM_BOT` instead of the ephemeral `GITHUB_TOKEN` (which would appear as
+  `LABORTEM_BOT_PAT` instead of the ephemeral `GITHUB_TOKEN` (which would appear as
   `github-actions[bot]`),
-- git commits are GPG-signed with the bot key, so they are *Verified* under the bot identity.
+- git commits are SSH-signed with the bot key, so they are *Verified* under the bot identity. For the
+  *Verified* badge to appear, the matching public key must be registered on the bot account as a
+  **signing key** (Settings → SSH and GPG keys → New SSH key → type *Signing Key*).
 
 Because the bot pushes with a real PAT, its pushes **do** trigger workflows — hence the `[skip ci]`
 marker on the automated formatting commit.
@@ -100,11 +105,9 @@ marker on the automated formatting commit.
 
 | Secret | Used for |
 | --- | --- |
-| `PAT_GITHUB_LABORTEM_BOT` | Bot-authenticated checkouts, release creation, issues, revert push |
-| `GPG_LABORTEM_BOT_PRIVATE_KEY` | Importing the bot GPG key to sign commits |
-| `GPG_LABORTEM_BOT_PRIVATE_PASSPHRASE` | Passphrase for the bot GPG key |
-| `GPG_LABORTEM_BOT_KEYID` | Signing key id |
-| `NPMJS_LABORTEM_BOT_AUTOMATION` | Publishing to npmjs |
+| `LABORTEM_BOT_PAT` | Bot-authenticated checkouts, release creation, issues, revert push |
+| `LABORTEM_BOT_SIGNING_PRIVATE_KEY` | SSH private key used to sign the bot's commits (passphrase-less) |
+| `NPMJS_LABORTEM_BOT_AUTOMATION` | Publishing to npmjs (referenced by `token_secret` in `REGISTRIES`) |
 
 ### Repository variables
 
@@ -112,6 +115,7 @@ marker on the automated formatting commit.
 | --- | --- |
 | `LABORTEM_BOT_USERNAME` | git author/committer name for bot commits |
 | `LABORTEM_BOT_EMAIL` | git author/committer email for bot commits |
+| `REGISTRIES` | JSON array of `{ registry, token_secret }` shared by the version-check and publish matrices |
 
 ### Ruleset bypass
 
