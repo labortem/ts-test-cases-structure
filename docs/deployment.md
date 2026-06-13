@@ -74,10 +74,10 @@ fails otherwise. This blocks a version clash *before* the merge instead of rever
 
 The registry list lives in a single repository variable, **`REGISTRIES`** (a JSON array), read via
 `fromJSON(vars.REGISTRIES)` by both the version-check and publish matrices. Today a single registry is
-targeted:
+targeted — GitHub Packages, authenticated with the bot PAT:
 
 ```json
-[{ "registry": "https://registry.npmjs.org", "token_secret": "NPMJS_LABORTEM_BOT_AUTOMATION" }]
+[{ "registry": "https://npm.pkg.github.com", "token_secret": "LABORTEM_BOT_PAT" }]
 ```
 
 Adding another registry is one entry in `REGISTRIES` (a `registry` URL and its `token_secret` — the
@@ -105,11 +105,10 @@ marker on the automated formatting commit.
 
 | Secret | Used for |
 | --- | --- |
-| `LABORTEM_BOT_PAT` | Bot-authenticated checkouts, release creation, issues, revert push |
+| `LABORTEM_BOT_PAT` | Bot-authenticated checkouts, release creation, issues, revert push, and publishing to GitHub Packages (requires `write:packages` and `read:packages` scopes) |
 | `LABORTEM_BOT_SIGNING_PRIVATE_KEY` | SSH private key used to sign the bot's commits (passphrase-less) |
 | `LABORTEM_BOT_GIT_COMMIT_USERNAME` | git author/committer name for bot commits |
 | `LABORTEM_BOT_GIT_COMMIT_EMAIL` | git author/committer email for bot commits |
-| `NPMJS_LABORTEM_BOT_AUTOMATION` | Publishing to npmjs (referenced by `token_secret` in `REGISTRIES`) |
 
 ### Repository variables
 
