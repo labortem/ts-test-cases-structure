@@ -16,6 +16,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4.1.6
+              with:
+                  token: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
 
             - name: Setup mise
               uses: jdx/mise-action@v2
@@ -45,7 +47,7 @@ jobs:
               id: create_release
               uses: actions/create-release@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
               with:
                   tag_name: ${{ steps.meta.outputs.version }}
                   release_name: ${{ steps.meta.outputs.version }}
@@ -68,7 +70,7 @@ jobs:
             - name: Add assets to release
               uses: dwenegar/upload-release-assets@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_LABORTEM_BOT }}
               with:
                   release_id: ${{ steps.create_release.outputs.id }}
                   assets_path: ${{ steps.package_file_name.outputs.package_file_name }}
