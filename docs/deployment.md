@@ -71,8 +71,8 @@ blocks a version clash _before_ the merge instead of reverting it afterwards.
 ## Registries
 
 The registry list lives in a single repository variable, **`REGISTRIES`** (a JSON array), read via
-`fromJSON(vars.REGISTRIES)` by both the version-check and publish matrices. Today a single registry is targeted — GitHub
-Packages, authenticated with the bot PAT:
+`fromJSON(vars.DEPLOYMENT_REGISTRIES)` by both the version-check and publish matrices. Today a single registry is
+targeted — GitHub Packages, authenticated with the bot PAT:
 
 ```json
 [
@@ -122,4 +122,3 @@ repository first.
 
 > If you prefer not to grant a ruleset bypass, the `revert` job can instead open a revert pull request (no bypass
 > needed, but the revert is not applied automatically), or be reduced to opening an issue only.
-

@@ -16,7 +16,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                include: ${{ fromJSON(vars.REGISTRIES) }}
+                include: ${{ fromJSON(vars.DEPLOYMENT_REGISTRIES) }}
 
         steps:
             - name: Checkout code
