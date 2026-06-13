@@ -70,7 +70,7 @@ blocks a version clash _before_ the merge instead of reverting it afterwards.
 
 ## Registries
 
-The registry list lives in a single repository variable, **`REGISTRIES`** (a JSON array), read via
+The registry list lives in a single repository variable, **`DEPLOYMENT_REGISTRIES`** (a JSON array), read via
 `fromJSON(vars.DEPLOYMENT_REGISTRIES)` by both the version-check and publish matrices. Today a single registry is
 targeted — GitHub Packages, authenticated with the bot PAT:
 
@@ -79,7 +79,7 @@ targeted — GitHub Packages, authenticated with the bot PAT:
 	{ "registry": "https://npm.pkg.github.com", "token_secret": "LABORTEM_BOT_PAT" }]
 ```
 
-Adding another registry is one entry in `REGISTRIES` (a `registry` URL and its `token_secret` — the **name** of the auth
+Adding another registry is one entry in `DEPLOYMENT_REGISTRIES` (a `registry` URL and its `token_secret` — the **name** of the auth
 secret, never its value, since the matrix is evaluated before the `secrets` context is available). The new registry then
 also appears as its own required status check on the `master` ruleset.
 
@@ -111,7 +111,7 @@ automated formatting commit.
 
 | Variable     | Used for                                                                                    |
 | ------------ | ------------------------------------------------------------------------------------------- |
-| `REGISTRIES` | JSON array of `{ registry, token_secret }` shared by the version-check and publish matrices |
+| `DEPLOYMENT_REGISTRIES` | JSON array of `{ registry, token_secret }` shared by the version-check and publish matrices |
 
 ### Ruleset bypass
 
