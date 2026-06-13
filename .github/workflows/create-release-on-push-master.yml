@@ -23,6 +23,10 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
+            - name: Read package version
+              id: meta
+              run: echo "version=$(npm pkg get version | xargs)" >> $GITHUB_OUTPUT
+
             - name: Pack production build
               id: pack
               run: |
@@ -43,19 +47,19 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: ${{ github.event.head_commit.message }}
-                  release_name: ${{ github.event.head_commit.message }}
+                  tag_name: ${{ steps.meta.outputs.version }}
+                  release_name: ${{ steps.meta.outputs.version }}
                   body: |
-                      <!--- RELEASE DRAFT FROM ${{ github.event.head_commit.message }}
+                      <!--- RELEASE DRAFT FOR ${{ steps.meta.outputs.version }}
 
                       Checklist:
-                      - The release tag and name is correct (follows the semantic versionning convention),
+                      - The release tag and name match the package version,
                       - The asset ZIP file contains all and only the files that the package needs,
                       - The changelog is filled.
 
                       -->
 
-                      # CHANGELOG - ${{ github.event.head_commit.message }} (${{ github.sha }})
+                      # CHANGELOG - ${{ steps.meta.outputs.version }} (${{ github.sha }})
 
                       - ...
                   draft: true
