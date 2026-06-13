@@ -122,4 +122,3 @@ repository first.
 
 > If you prefer not to grant a ruleset bypass, the `revert` job can instead open a revert pull request (no bypass
 > needed, but the revert is not applied automatically), or be reduced to opening an issue only.
-
