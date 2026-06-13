@@ -11,12 +11,13 @@
 	},
 	"local-history.exclude": [
 		".history/**",
-		".vscode/**",
-		"node_modules/**"
+		"node_modules/**",
+		"build/**"
 	],
 	"files.exclude": {
 		"build": false,
 		"node_modules": true,
-		".history": true
+		".history": true,
+		"package-lock.json": true
 	}
 }
